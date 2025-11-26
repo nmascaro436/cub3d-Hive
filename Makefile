@@ -6,14 +6,14 @@
 #    By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 11:12:56 by nmascaro          #+#    #+#              #
-#    Updated: 2025/11/26 11:19:12 by nmascaro         ###   ########.fr        #
+#    Updated: 2025/11/26 13:35:19 by nmascaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = 
+SRCS = init_game.c
 .SECONDARY: $(OBJS)
 OBJS = $(SRCS:.c=.o)
 MLX_DIR = mlx
