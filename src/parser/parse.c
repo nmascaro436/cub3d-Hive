@@ -21,17 +21,35 @@ C 225,30,0        # Ceiling
 1000000001
 1111111111
 
-/*open, close, read, write,
+open, close, read, write,
 printf, malloc, free, perror,
 strerror, exit, gettimeofday
-*/
-
+*/ 
 
 #include "cub3d.h"
 
-t_game	*parse(char **argv)
+bool    valid_args(char *argv)
 {
-    
-    return(NULL);
+	int i;
+	
+	i = 0;
+	while (argv[i])
+	{
+		if (argv[i] == '.')
+		{
+			if (ft_strncmp(&argv[i], ".cub", 5) == 0)
+				return (true);
+			else
+				return (false);
+		}
+		i++;
+	}
+	return (false);
+}
 
+t_game	*parse(char *argv)
+{
+	if (!valid_args(argv))
+		return (NULL);
+	return (NULL);
 }
