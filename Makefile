@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 11:12:56 by nmascaro          #+#    #+#              #
-#    Updated: 2025/11/26 11:19:12 by nmascaro         ###   ########.fr        #
+#    Updated: 2025/11/26 15:20:57 by jkorvenp         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = 
+SRCS = main.c parse.c
 .SECONDARY: $(OBJS)
 OBJS = $(SRCS:.c=.o)
 MLX_DIR = mlx

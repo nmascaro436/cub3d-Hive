@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/11/26 11:40:31 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/11/26 15:26:21 by jkorvenp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,39 @@
 # define CUB3D_H
 
 
+# include "libft/libft.h"
+# include "libft/get_next_line.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <MLX42/MLX42.h>
+# include <math.h>
+
+
+typedef struct player
+{
+	double	x;
+	double	y;
+	char	view;
+}	t_player;
+
+typedef struct map
+{
+	int		max_x;
+	int		max_y;
+	int		*floor_color;
+	int		*ceil_color;
+	char	*north;
+	char 	*south;
+	char	*west;
+	char 	*east;
+}  t_map;
+
+typedef struct game
+{
+	t_map		*map;
+	t_player	*player;
+}	t_game;
+
+t_game	*parse(char **argv);
 
 #endif
