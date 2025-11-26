@@ -6,44 +6,11 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/11/26 15:43:41 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/11/26 16:05:04 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void init_player_execution(t_player *player)
-{
-    if (player-> == 'N')
-    {
-        player->dir_x = 0;
-        player->dir_y = -1;
-        player->plane_x = 0.66;  // perpendicular to dir, FOV (field of view, how wide is our screen) ~66°
-        player->plane_y = 0;
-    }
-    else if (player-> == 'S')
-    {
-        player->dir_x = 0;
-        player->dir_y = 1;
-        player->plane_x = -0.66;
-        player->plane_y = 0;
-    }
-    else if (player-> == 'E')
-    {
-        player->dir_x = 1;
-        player->dir_y = 0;
-        player->plane_x = 0;
-        player->plane_y = 0.66;
-    }
-    else if (player-> == 'W')
-    {
-        player->dir_x = -1;
-        player->dir_y = 0;
-        player->plane_x = 0;
-        player->plane_y = -0.66;
-    }
-}
-
 
 void error_and_exit(char *str)
 {
@@ -56,6 +23,37 @@ void error_and_cleanup(t_game *game, char *str)
 	if (game->mlx)
 		mlx_terminate(game->mlx);
 	exit (EXIT_FAILURE);
+}
+void init_player_execution(t_player *player)
+{
+    if (player->view == 'N')
+    {
+        player->dir_x = 0;
+        player->dir_y = -1;
+        player->plane_x = 0.66;  // perpendicular to dir, FOV (field of view, how wide is our screen) ~66°
+        player->plane_y = 0;
+    }
+    else if (player->view == 'S')
+    {
+        player->dir_x = 0;
+        player->dir_y = 1;
+        player->plane_x = -0.66;
+        player->plane_y = 0;
+    }
+    else if (player->view == 'E')
+    {
+        player->dir_x = 1;
+        player->dir_y = 0;
+        player->plane_x = 0;
+        player->plane_y = 0.66;
+    }
+    else if (player->view == 'W')
+    {
+        player->dir_x = -1;
+        player->dir_y = 0;
+        player->plane_x = 0;
+        player->plane_y = -0.66;
+    }
 }
 void init_game(t_game *game, t_map *map)
 {
