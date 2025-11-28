@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/11/27 14:56:21 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/11/28 15:44:27 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void key_handler(mlx_key_data_t keydata, void *param)
 			game->rotate_right = false;
 	}
 }
-
 
 int game_loop(void * param)
 {
