@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/11/26 15:50:58 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/11/27 13:40:52 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_player
 	double plane_y; // camera plane
 }	t_player;
 
-typedef struct map
+typedef struct s_map
 {
 	int		max_x;
 	int		max_y;
@@ -50,7 +50,7 @@ typedef struct game
 	t_player	*player;
 	mlx_t	*mlx;
 	mlx_image_t *img;
-	bool forward; // is that key pressed?
+	bool forward;
 	bool back;
 	bool left;
 	bool right;
@@ -59,5 +59,6 @@ typedef struct game
 }	t_game;
 
 t_game	*parse(char **argv);
+void init_game(t_game *game, t_map *map);
 
 #endif
