@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/11/28 15:48:30 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:50:52 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int game_loop(void * param)
 
 	game = (t_game *)param;
 	move_player(game, game->map);
-	raycasting(game, game->map);
+	raycaster(game, game->map);
 	return (0);
 }
 void setup_run_game(t_game *game, t_map *map)

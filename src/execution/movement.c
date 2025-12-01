@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/11/28 15:19:01 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/01 11:40:44 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 // to avoid moving inside the wall grid cell, so i dont accidentally go to far into a wall
 // it allows sliding against walls naturally
-static void move_try(t_game *game, t_map *map, double new_x, double new_y) // tell Jenni to add a grid or some tiles (2d array of  map)
+static void move_try(t_game *game, t_map *map, double new_x, double new_y)
 {
-	if (map->grid[(int)game->player->y][(int)new_x] != '1') // If I stay at my current row (Y), and move to the new column (X), is there a wall?
+	if (map->map[(int)game->player->y][(int)new_x] != '1') // If I stay at my current row (Y), and move to the new column (X), is there a wall?
 		game->player->x = new_x; // if  not wall move horizontally
-	if (map->grid[(int)new_y][(int)game->player->x] != '1') // If I stay at my current column (X), and move to the new row (Y), is there a wall?
+	if (map->map[(int)new_y][(int)game->player->x] != '1') // If I stay at my current column (X), and move to the new row (Y), is there a wall?
 		game->player->y = new_y; // if not wall move vertically
 }
 
@@ -62,8 +62,8 @@ static void rotate_calculation(double *x, double *y, double angle)
 	old_x = *x; // save old x because we will overwrite it
 	cos_a = cos(angle); // how much of the rotation is "horizontal"
 	sin_a = sin(angle); // how much of the rotation is "vertical"
-	*x = old_x * cos_a - *y * sin_a;
-	*y = old_x * sin_a - *y * cos_a;
+	*x = old_x * cos_a - *y * sin_a; // take some of the old sideways position and take some of the old up/down position
+	*y = old_x * sin_a + *y * cos_a;
 }
 
 static void handle_rotation(t_game *game, double rotation_speed)
