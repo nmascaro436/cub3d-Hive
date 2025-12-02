@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/11/27 13:40:52 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:39:09 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,36 @@ typedef struct game
 	bool rotate_left;
 	bool rotate_right;
 }	t_game;
+
+typedef struct s_ray_dir
+{
+	double	camera_x; // horizontal position of the ray on the camera plane
+	double	dir_x; // direction vector of the ray
+	double	dir_y; // direction vector of the ray
+	int	map_x; // current grid cell the ray is in
+	int map_y; // current grid cell the ray is in
+	double side_dist_x; // distance from current position to next x side (vertical wall line)
+	double side_dist_y; // distance from current position to next y side (horizontal wall line)
+	double delta_dist_x; // distance needed to cross one full square in x
+	double delta_dist_y; // distance needed to cross one full square in y
+	int step_x; // +1 (right) or -1 (left)
+	int step_y; // +1 (down) -1 (up)
+	int hit_wall; // did i hit a wall?
+	int side; // which side of a wall was hit? 0 = vertical (x side)wall 1 = horizontal wall (y side)
+} t_ray_dir;
+typedef struct s_ray_wall
+{
+	double perp_dist; // perpendicular distance to wall
+	int line_height; // height of wall 
+	int start_draw; // y coordinate to start draw
+	int end_draw; // y coordinate to stop draw
+	int color; // wall color or texture
+} t_ray_wall;
+typedef struct s_ray
+{
+	t_ray_dir direction;
+	t_ray_wall wall;
+}	t_ray;
 
 t_game	*parse(char **argv);
 void init_game(t_game *game, t_map *map);

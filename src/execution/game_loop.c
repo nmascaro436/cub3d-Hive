@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/01 10:50:52 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/01 14:24:11 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void key_handler(mlx_key_data_t keydata, void *param)
 	t_game *game;
 
 	game = (t_game *)param;
-	if (keydata.action == MLX_ PRESS)
+	if (keydata.action == MLX_PRESS)
 	{
 		if (keydata.key == MLX_KEY_ESCAPE)
 				error_and_cleanup(game, "Game closed");
