@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/02 11:39:09 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/03 09:47:35 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ typedef struct s_ray_dir
 } t_ray_dir;
 typedef struct s_ray_wall
 {
-	double perp_dist; // perpendicular distance to wall
+	double perp_dist; // perpendicular distance to wall (distance from player to all in the direction player is looking, like real forward distance, so walls aren't curved)
 	int line_height; // height of wall 
 	int start_draw; // y coordinate to start draw
 	int end_draw; // y coordinate to stop draw
-	int color; // wall color or texture
+	int texture; // wall texture
 } t_ray_wall;
 typedef struct s_ray
 {

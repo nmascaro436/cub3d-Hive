@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/01 14:38:06 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/03 09:31:50 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 // DDA traces a ray step by step through the map and checks each step if i've hit a wall, stops when i do
 // and records the distance
+///each ray is a vertical stripe of pixels on the screen
 void raycaster(t_game *game, t_map *map)
 {
 	int x;

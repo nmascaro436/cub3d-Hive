@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/01 14:24:11 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:06:09 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,42 @@ void key_handler(mlx_key_data_t keydata, void *param)
 	}
 }
 
+void draw_ceil_and_floor(t_game *game)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < HEIGHT / 2)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			mlx_put_pixel(game->img, x, y, game->map->ceil_color);
+			x++;
+		}
+		y++;
+	}
+	y = HEIGHT / 2;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			mlx_put_pixel(game->img, x, y, game->map->floor_color);
+			x++;
+		}
+		y++;
+	}
+}
+
 int game_loop(void * param)
 {
 	t_game *game;
 
 	game = (t_game *)param;
 	move_player(game, game->map);
+	draw_ceil_and_floor(game);
 	raycaster(game, game->map);
 	return (0);
 }
