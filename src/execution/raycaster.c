@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/03 14:43:10 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/03 16:32:02 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,26 @@ void init_ray(t_ray *ray, t_game *game, int x)
 		ray->dir.side_dist_y = (ray->dir.map_y + 1.0 - game->player->y) * ray->dir.delta_dist_y;
 	}
 }
-/*
-*1. Start a loop that runs until you hit a wall
-2. Compare side_dist_x and side_dist_y
 
-Whichever is smaller, that is the next boundary the ray hits.
-
-3. If you move in X:
-
-Add delta_dist_x to side_dist_x
-
-Move 1 grid cell in X direction using step_x
-
-Set side = 0 (vertical wall)
-
-4. If you move in Y:
-
-Add delta_dist_y to side_dist_y
-
-Move 1 grid cell in Y direction using step_y
-
-Set side = 1 (horizontal wall)
-
-5. After moving, check the current map cell
-
-If map cell is '1', set hit_wall = 1 and stop.
-*/
 void	dda_logic(t_ray *ray, t_map *map)
 {
-
+	while (ray->dir.hit_wall == '0')
+	{
+		if (ray->dir.side_dist_x < ray->dir.side_dist_y) // move in x
+		{
+			ray->dir.side_dist_x += ray->dir.delta_dist_x;
+			ray->dir.map_x += ray->dir.step_x;
+			ray->dir.side = 0;
+		}
+		else // move in y
+		{
+			ray->dir.side_dist_y += ray->dir.delta_dist_y;
+			ray->dir.map_y += ray->dir.step_y;
+			ray->dir.side = 1;	
+		}
+		if(map->map[ray->dir.map_y][ray.dir.map_x] == '1')
+			ray->dir.hit_wall = 1;
+	}
 }
 /*
 *1. Compute perpendicular wall distance
