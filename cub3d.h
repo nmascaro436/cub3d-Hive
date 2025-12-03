@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/03 09:47:35 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:20:10 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_ray_wall
 } t_ray_wall;
 typedef struct s_ray
 {
-	t_ray_dir direction;
+	t_ray_dir dir;
 	t_ray_wall wall;
 }	t_ray;
 
