@@ -16,7 +16,7 @@ bool    valid_file(char *argv, char *file, int len)
 	{
 		if (argv[i] == '.')
 		{
-			if (ft_strncmp(&argv[i], "file", len) == 0)
+			if (ft_strncmp(&argv[i], file, len) == 0)
 				return (true);
 			else
 				return (false);

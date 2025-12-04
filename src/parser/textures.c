@@ -1,21 +1,58 @@
 #include "cub3d.h"
 
+
 int	get_color(char	*line)
 {
-    char    **temp
-    int red;
-    int green;
-    int blue;
+	int color[3];
+	int	i;
+	int	j;
   
-    line +=2;
-/*
-    red = ft_atoi(temp[0]);
-    green = ft_atoi(temp[1]);
-    blue = ft_atoi(temp[2]);
-    */
+	i = 2;
+	j = 0;
+	while(line[i] && j < 3)
+	{
+		while (ft_isdigit(line[i]))
+		{
+			color[j] = color[j] * 10 +line[i] - '0';
+			i++;
+		}
+		if ((line[i] != ',' && ft_isdigit(line[i+1])) || line[i] != '\0')
+			return (-1);
+		i++;
+		j++;
+	}
+	if (j != 3)
+		return(-1);
+	while(j >= 0)
+	{
+		if (color[j] > 255 || color[j] < 0)
+			return(-1);
+		j--;
+	}
+	return ((color[0] << 16) | (color[1] << 8) | color[2]);
 }
 
-bool	*store_textures(char **p, char *line)
+bool	store_color(t_map *map, char *line)
+{
+	else if ((!map->floor_color && ft_strncmp(line, "F ", 2) == 0))
+	{
+		map->floor_color = get_color(line);
+		if (map->floor_color < 0)
+			return(false);//free stuff
+		else
+			return(true);
+	}
+	else if ((!map->ceil_color && ft_strncmp(line, "C ", 2) == 0))
+	{
+		map->ceil_color = get_color(line);
+		if (map->ceil_color < 0)
+			return(false); //free stuff
+		else
+			return(true);
+	}
+}
+
+bool	store_textures(char **p, char *line)
 {
 	//more valid checks????
 	int len;
@@ -23,11 +60,12 @@ bool	*store_textures(char **p, char *line)
 	len = strlen(line) - 3;
 	*p = ft_substr(line, 3 , len);
 	if (!p)
-		return(NULL)
+	{
+		return(NULL);
+	}
 	if (!valid_file(*p, ".xpm", 5))
 	{
 		free(*p);
-		free_all(game);
 		return(false);
 	}
 	return (true);
@@ -36,29 +74,34 @@ bool	*store_textures(char **p, char *line)
 
 bool	check_textures(t_game game, t_map *map, char *line)
 {
-	if (!map->north && ft_strncmp(line, "NO ", 3) == 0)
-		return (store_textures(&map->north, line));
-	if (!map->south && ft_strncmp(line, "SO ", 3) == 0)
-		return (store_textures(&map->south, line));
-	if (!map->west && ft_strncmp(line, "WE ", 3) == 0)
-		return (store_textures(&map->west, line));
-	if (!map->east && ft_strncmp(line, "EA ", 3) == 0)
-		return (store_textures(&map->east, line));
-	if ((!map->floor_color && ft_strncmp(line, "F ", 2) == 0))
+	if (ft_strncmp(line, "NO ", 3) == 0)
 	{
-		map->floor_color = get_color(line);
-		if (map->floor_color < 0)
+		if (map->north)
+			return (false);
+		else
+			return (store_textures(&map->north, line));
+	}
+	else if (ft_strncmp(line, "SO ", 3) == 0)
+	{
+		if (map->south)
+			return (false);
+		else
+			return (store_textures(&map->south, line));
+	}
+	else if (ft_strncmp(line, "WE ", 3) == 0)
+	{
+		if (map->west)
 			return(false);
 		else
-			return(true);
+			return (store_textures(&map->west, line));
 	}
-	if ((!map->ceil_color && ft_strncmp(line, "C ", 2) == 0))
-	{
-		map->ceil_color = get_color(line);
-		if (map->ceil_color < 0)
-			return(false);
+	else if (ft_strncmp(line, "EA ", 3) == 0)
+	{	
+		if (map->east)
+			return (false);
 		else
-			return(true);
+			return (store_textures(&map->east, line));
 	}
-	return (false);
+	else
+		return (store_color(t_map *map, char *line));//free stuff
 }

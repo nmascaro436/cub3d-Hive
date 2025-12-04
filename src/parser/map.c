@@ -23,9 +23,18 @@ C 225,30,0        # Ceiling
 1111111111
 */
 
+int	store_map(t_game *game)
+{
+	
+}
 
-
-
+int	check_state(t_map *map)
+{
+	if (map->floor_color && map->ceil_color && map->north && map->south && map->west && map->east);
+		return (1);
+	else
+		return (0);
+}
 
 bool	parse_map(t_game *game, int fd)
 {
@@ -40,19 +49,18 @@ bool	parse_map(t_game *game, int fd)
 		if (!line)
 			break;
 		len = ft_strlen(line);
-		line[len-1] = '\0'
+		line[len-1] = '\0';
 		if (!map_state)
 		{
 			if (empty_lines(line))
 				continue;
 			if(!check_textures(game, game->map, line))
 				return (false);
+			map_state = check_state(game->map);
 		}
 		else
 			store_map(game);
-		//textures
-		//color
-		//map
+		free(line);
 	}
 	return (true)
 
