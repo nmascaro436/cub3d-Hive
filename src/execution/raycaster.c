@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/03 16:32:02 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:23:39 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void init_ray(t_ray *ray, t_game *game, int x)
 
 void	dda_logic(t_ray *ray, t_map *map)
 {
-	while (ray->dir.hit_wall == '0')
+	while (ray->dir.hit_wall == 0)
 	{
 		if (ray->dir.side_dist_x < ray->dir.side_dist_y) // move in x
 		{
@@ -60,32 +60,42 @@ void	dda_logic(t_ray *ray, t_map *map)
 		{
 			ray->dir.side_dist_y += ray->dir.delta_dist_y;
 			ray->dir.map_y += ray->dir.step_y;
-			ray->dir.side = 1;	
+			ray->dir.side = 1;
 		}
-		if(map->map[ray->dir.map_y][ray.dir.map_x] == '1')
+		if(map->map[ray->dir.map_y][ray->dir.map_x] == '1')
+		{
 			ray->dir.hit_wall = 1;
+			if (ray->dir.side == 0)
+			{
+				if (ray->dir.step_x == 1)
+					ray->wall.texture = WEST_TEXT;
+				else
+					ray->wall.texture = EAST_TEXT;
+			}
+			else
+			{
+				if (ray->dir.step_y == 1)
+					ray->wall.texture = NORTH_TEXT;
+				else
+					ray->wall.texture = SOUTH_TEXT;
+			}
+		}
 	}
 }
-/*
-*1. Compute perpendicular wall distance
 
-The formula depends on whether the hit side was vertical or horizontal.
-
-2. Compute line height
-
-Use perpendicular distance to find wall height on screen.
-
-3. Compute drawing start and end Y positions
-
-Center the wall vertically.
-
-4. Clamp start and end to window bounds
-
-Make sure they do not go outside the screen.
-*/
-void	calculate_wall(t_ray *ray, t_map *map)
+void	calculate_wall(t_ray *ray, t_map *game)
 {
-
+	if (ray->dir.side == 0) 
+		ray->wall.perp_dist = ray->dir.side_dist_x - ray->dir.delta_dist_x; // after dda side distance is the total distance from player to wall, we substract delta distance to go back to the line of the wall (not the full grid!)
+	else
+		ray->wall.perp_dist = ray->dir.side_dist_y - ray->dir.delta_dist_y;
+	ray->wall.line_height = HEIGHT / ray->wall.perp_dist; // if the distance to wall is small, wall is bigger
+	ray->wall.start_draw = (HEIGHT / 2) - (ray->wall.line_height / 2); // wall needs to be in the centre of the screen (start drawing in the middle but go up half the wall's height)
+	if (ray->wall.start_draw < 0) // if wall is really close and goes off screen
+		ray->wall.start_draw = 0; // we start drawing from the top of screen
+	ray->wall.end_draw = (HEIGHT / 2) + (ray->wall.line_height /  2);
+	if (ray->wall.end_draw >= HEIGHT) // if wall is really close
+		ray->wall.end_draw = HEIGHT - 1; // we put to bottom of screen
 }
 
 // DDA traces a ray step by step through the map and checks each step if i've hit a wall, stops when i do
@@ -101,7 +111,7 @@ void raycaster(t_game *game, t_map *map)
 	{
 		init_ray(&ray, game, x);
 		dda_logic(&ray, map);
-		calculate_wall(&ray);
+		calculate_wall(&ray, game);
 		draw_ray(&ray, game);
 		x++;
 	}

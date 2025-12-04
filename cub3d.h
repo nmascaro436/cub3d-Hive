@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/03 11:20:10 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:13:44 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 
 #define WIDTH 1920
 #define HEIGHT 1080
+#define NORTH_TEXT 1
+#define SOUTH_TEXT 2
+#define WEST_TEXT 3
+#define EAST_TEXT 4
 typedef struct s_player
 {
 	double	x;
@@ -76,7 +80,7 @@ typedef struct s_ray_dir
 } t_ray_dir;
 typedef struct s_ray_wall
 {
-	double perp_dist; // perpendicular distance to wall (distance from player to all in the direction player is looking, like real forward distance, so walls aren't curved)
+	double perp_dist; // perpendicular distance to wall (distance from player to wall in the direction player is looking, like real forward distance, so walls aren't curved)
 	int line_height; // height of wall 
 	int start_draw; // y coordinate to start draw
 	int end_draw; // y coordinate to stop draw
