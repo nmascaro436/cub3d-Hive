@@ -6,7 +6,7 @@
 /*   By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/11/27 13:44:57 by jkorvenp         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:53:51 by jkorvenp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,14 @@ typedef struct game
 //parse.c
 t_game	*parse(char *argv);
 
+//map.c
+bool	parse_map(t_game *game, int fd);
+
+//textures.c
+bool	check_textures(t_game game, t_map *map, char *line);
+
 //utils.c
 void    free_all(t_game *game);
+bool    valid_file(char *argv, char *file, int len);
 
 #endif

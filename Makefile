@@ -6,14 +6,15 @@
 #    By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 11:12:56 by nmascaro          #+#    #+#              #
-#    Updated: 2025/11/26 16:16:43 by jkorvenp         ###   ########.fr        #
+#    Updated: 2025/12/04 12:31:22 by jkorvenp         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = src/main.c src/parser/parse.c
+SRCS = src/main.c src/parser/parse.c src/parser/map.c src/parser/utils.c 
+		src/parser/textures.c
 .SECONDARY: $(OBJS)
 OBJS = $(SRCS:.c=.o)
 MLX_DIR = mlx

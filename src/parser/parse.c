@@ -28,24 +28,7 @@ strerror, exit, gettimeofday
 
 #include "cub3d.h"
 
-bool    valid_args(char *argv)
-{
-	int i;
-	
-	i = 0;
-	while (argv[i])
-	{
-		if (argv[i] == '.')
-		{
-			if (ft_strncmp(&argv[i], ".cub", 5) == 0)
-				return (true);
-			else
-				return (false);
-		}
-		i++;
-	}
-	return (false);
-}
+
 t_game	*init_game()
 {
 	t_game *game;
@@ -77,7 +60,7 @@ t_game	*parse(char *argv)
 	t_game *game;
 	int	fd;
 
-	if (!valid_args(argv))
+	if (!valid_file(argv, ".cub", 5))
 	{
 		perror("invalid filename");
 		return (NULL);
@@ -95,7 +78,7 @@ t_game	*parse(char *argv)
 		perror(".cub open failed");
 		return (NULL);
 	}
-	if (!parse_map(game->map, fd))
+	if (!parse_map(game, fd))
 		return (NULL);
 	return (game);
 }
