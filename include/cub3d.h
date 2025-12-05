@@ -6,7 +6,7 @@
 /*   By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/04 16:06:12 by jkorvenp         ###   ########.fr       */
+/*   Updated: 2025/12/05 17:26:23 by jkorvenp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct player
 
 typedef struct map
 {
-	char	**map;
+	char	**chart;
 	int		max_x;
 	int		max_y;
 	int		*floor_color;
@@ -51,7 +51,8 @@ typedef struct game
 t_game	*parse(char *argv);
 
 //map.c
-bool	parse_map(t_game *game, int fd);
+bool	parse_map(t_game *game, t_map *map, char *argv);
+bool	parse_textures(t_game *game, char *argv);
 
 //textures.c
 bool	check_textures(t_game game, t_map *map, char *line);
@@ -59,5 +60,7 @@ bool	check_textures(t_game game, t_map *map, char *line);
 //utils.c
 void    free_all(t_game *game);
 bool    valid_file(char *argv, char *file, int len);
+void	print_map(t_map *map);
+void	print_player(t_player *player);
 
 #endif

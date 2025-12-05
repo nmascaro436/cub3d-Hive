@@ -1,26 +1,4 @@
-/*Open .cub file → read line by line.
-Identify and validate textures.
-Identify and validate floor/ceiling colors.
-Identify map lines → build 2D map structure.
-Validate map integrity (walls, single player, valid characters).
-
-# Textures
-NO ./textures/north.xpm
-SO ./textures/south.xpm
-WE ./textures/west.xpm
-EA ./textures/east.xpm
-
-# Colors (RGB)
-F 220,100,0       # Floor
-C 225,30,0        # Ceiling
-
-# Map layout
-1111111111
-1000000001
-1000N00001
-1000000001
-1111111111
-
+/*
 open, close, read, write,
 printf, malloc, free, perror,
 strerror, exit, gettimeofday
@@ -58,7 +36,6 @@ t_game	*init_game()
 t_game	*parse(char *argv)
 {
 	t_game *game;
-	int	fd;
 
 	if (!valid_file(argv, ".cub", 5))
 	{
@@ -71,14 +48,10 @@ t_game	*parse(char *argv)
 		perror("memory allocation failed");
 		return(NULL);
 	}
-	fd = open(argv, O_RDONLY);
-	if (fd < 0)
-	{
-		free_all(game);
-		perror(".cub open failed");
+	if (!parse_textures(game, argv))
 		return (NULL);
-	}
-	if (!parse_map(game, fd))
+	if (!parse_map(game, game->map, argv))
 		return (NULL);
+
 	return (game);
 }

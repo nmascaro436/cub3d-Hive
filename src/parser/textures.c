@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-
+/*
 int	get_color(char	*line)
 {
 	int color[3];
@@ -34,7 +34,7 @@ int	get_color(char	*line)
 
 bool	store_color(t_map *map, char *line)
 {
-	else if ((!map->floor_color && ft_strncmp(line, "F ", 2) == 0))
+	if ((!map->floor_color && ft_strncmp(line, "F ", 2) == 0))
 	{
 		map->floor_color = get_color(line);
 		if (map->floor_color < 0)
@@ -103,5 +103,7 @@ bool	check_textures(t_game game, t_map *map, char *line)
 			return (store_textures(&map->east, line));
 	}
 	else
-		return (store_color(t_map *map, char *line));//free stuff
-}
+		return (store_color(map, line));//free stuff
+}*/
+
+
