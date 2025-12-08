@@ -6,14 +6,14 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/08 12:19:19 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:50:16 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 
-void init_ray(t_ray *ray, t_game *game, int x)
+static void init_ray(t_ray *ray, t_game *game, int x)
 {
 	ray->dir.camera_x = 2.0 * x / (double)WIDTH - 1.0; //converts pixel position to a num between -1 and 1 (we know were the ray is pointing at, "percentage" of how far left/right i am looking)
 	ray->dir.dir_x = game->player->dir_x + game->player->plane_x * ray->dir.camera_x; // where i am looking + peripheral vision * how far left/right ray is from center
@@ -46,7 +46,7 @@ void init_ray(t_ray *ray, t_game *game, int x)
 	}
 }
 
-void	dda_logic(t_ray *ray, t_map *map)
+static void	dda_logic(t_ray *ray, t_map *map)
 {
 	while (ray->dir.hit_wall == 0)
 	{
@@ -83,7 +83,7 @@ void	dda_logic(t_ray *ray, t_map *map)
 	}
 }
 
-void	calculate_wall(t_ray *ray, t_map *game)
+static void	calculate_wall(t_ray *ray, t_map *game)
 {
 	if (ray->dir.side == 0) 
 		ray->wall.perp_dist = ray->dir.side_dist_x - ray->dir.delta_dist_x; // after dda side distance is the total distance from player to wall, we substract delta distance to go back to the line of the wall (not the full grid!)
@@ -112,7 +112,7 @@ void raycaster(t_game *game, t_map *map)
 		init_ray(&ray, game, x);
 		dda_logic(&ray, map);
 		calculate_wall(&ray, game);
-		draw_ray(&ray, game);
+		draw_ray(&ray, game, x);
 		x++;
 	}
 }

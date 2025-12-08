@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/11/27 11:42:10 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:48:18 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,3 @@ void init_game(t_game *game, t_map *map)
 	game->rotate_left = false;
 	game->rotate_right = false;
 }
-
-

@@ -6,13 +6,13 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/08 12:16:39 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:49:18 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void key_handler(mlx_key_data_t keydata, void *param)
+static void key_handler(mlx_key_data_t keydata, void *param)
 {
 	t_game *game;
 
@@ -51,7 +51,7 @@ void key_handler(mlx_key_data_t keydata, void *param)
 	}
 }
 
-void draw_ceil_and_floor(t_game *game)
+static void draw_ceil_and_floor(t_game *game)
 {
 	int x;
 	int y;
@@ -79,7 +79,7 @@ void draw_ceil_and_floor(t_game *game)
 		y++;
 	}
 }
-void load_textures(t_game *game)
+static void load_textures(t_game *game)
 {
 	game->map->north_tex = mlx_load_png(game->map->north); //changee validation in parsiiiiing!!!! not xpm
 	if (!game->map->north_tex)
@@ -95,7 +95,7 @@ void load_textures(t_game *game)
 		error_and_cleanup(game, "Failed to load texture");
 }
 
-int game_loop(void * param)
+static int game_loop(void * param)
 {
 	t_game *game;
 

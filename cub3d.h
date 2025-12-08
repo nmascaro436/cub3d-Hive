@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/08 12:13:22 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 14:51:05 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_map
     mlx_texture_t *east_tex;
 }  t_map;
 
-typedef struct game
+typedef struct s_game
 {
 	t_map		*map;
 	t_player	*player;
@@ -65,6 +65,7 @@ typedef struct game
 	bool rotate_left;
 	bool rotate_right;
 }	t_game;
+
 
 typedef struct s_ray_dir
 {
@@ -98,5 +99,11 @@ typedef struct s_ray
 
 t_game	*parse(char **argv);
 void init_game(t_game *game, t_map *map);
+void error_and_cleanup(t_game *game, char *str);
+void error_and_exit(char *str);
+void setup_run_game(t_game *game, t_map *map);
+void raycaster(t_game *game, t_map *map);
+void draw_ray(t_ray *ray, t_game *game, int x);
+void move_player(t_game *game, t_map *map);
 
 #endif
