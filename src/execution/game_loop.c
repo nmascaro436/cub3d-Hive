@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/08 12:14:53 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:16:39 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,16 @@ void draw_ceil_and_floor(t_game *game)
 }
 void load_textures(t_game *game)
 {
-	game->map->north_tex = mlx_load_png(game->map->north) //changee validation in parsiiiiing!!!! not xpm
+	game->map->north_tex = mlx_load_png(game->map->north); //changee validation in parsiiiiing!!!! not xpm
 	if (!game->map->north_tex)
 		error_and_cleanup(game, "Failed to load texture");
-	game->map->south_tex = mlx_load_png(game->map->south)
+	game->map->south_tex = mlx_load_png(game->map->south);
 	if (!game->map->south_tex)
 		error_and_cleanup(game, "Failed to load texture");
-	game->map->west_tex = mlx_load_png(game->map->west)
+	game->map->west_tex = mlx_load_png(game->map->west);
 	if (!game->map->west_tex)
 		error_and_cleanup(game, "Failed to load texture");
-	game->map->east_tex = mlx_load_png(game->map->east)
+	game->map->east_tex = mlx_load_png(game->map->east);
 	if (!game->map->east_tex)
 		error_and_cleanup(game, "Failed to load texture");
 }

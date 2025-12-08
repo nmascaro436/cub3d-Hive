@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/08 11:48:36 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:19:19 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,26 +96,6 @@ void	calculate_wall(t_ray *ray, t_map *game)
 	ray->wall.end_draw = (HEIGHT / 2) + (ray->wall.line_height /  2);
 	if (ray->wall.end_draw >= HEIGHT) // if wall is really close
 		ray->wall.end_draw = HEIGHT - 1; // we put to bottom of screen
-}
-
-void draw_ray(t_ray *ray, t_game *game)
-{
-	int y;
-	char *texture;
-
-	if (ray->wall.texture == NORTH_TEXT)
-		texture = game->map->north;
-	else if (ray->wall.texture == SOUTH_TEXT)
-		texture = game->map->south;
-	else if (ray->wall.texture == EAST_TEXT)
-		texture = game->map->east;
-	else
-		texture = game->map->west;
-	y = ray->wall.start_draw;
-	while (y <= ray->wall.end_draw)
-	{
-		y++;
-	}
 }
 
 // DDA traces a ray step by step through the map and checks each step if i've hit a wall, stops when i do
