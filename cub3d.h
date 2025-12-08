@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/08 11:55:34 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:13:22 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ typedef struct s_map
 	char 	*south;
 	char	*west;
 	char 	*east;
+	mlx_texture_t *north_tex;
+    mlx_texture_t *south_tex;
+    mlx_texture_t *west_tex;
+    mlx_texture_t *east_tex;
 }  t_map;
 
 typedef struct game
