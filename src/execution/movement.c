@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/01 11:40:44 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 10:00:04 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 // it allows sliding against walls naturally
 static void move_try(t_game *game, t_map *map, double new_x, double new_y)
 {
-	if (map->map[(int)game->player->y][(int)new_x] != '1') // If I stay at my current row (Y), and move to the new column (X), is there a wall?
+	if (map->chart[(int)game->player->y][(int)new_x] != '1') // If I stay at my current row (Y), and move to the new column (X), is there a wall?
 		game->player->x = new_x; // if  not wall move horizontally
-	if (map->map[(int)new_y][(int)game->player->x] != '1') // If I stay at my current column (X), and move to the new row (Y), is there a wall?
+	if (map->chart[(int)new_y][(int)game->player->x] != '1') // If I stay at my current column (X), and move to the new row (Y), is there a wall?
 		game->player->y = new_y; // if not wall move vertically
 }
 

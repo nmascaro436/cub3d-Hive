@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/04 12:13:44 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 11:55:34 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct s_map
 {
 	int		max_x;
 	int		max_y;
-	int		*floor_color;
-	int		*ceil_color;
+	int		floor_color;
+	int		ceil_color;
 	char	*north;
 	char 	*south;
 	char	*west;

@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/03 10:06:09 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:11:03 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,21 @@ void draw_ceil_and_floor(t_game *game)
 		y++;
 	}
 }
+void load_textures(t_game *game)
+{
+	game->map->north = mlx_load_png(game->map->north) //changee validation in parsiiiiing!!!! not xpm
+	if (!game->map->north)
+		error_and_cleanup(game, "Failed to load texture");
+	game->map->south = mlx_load_png(game->map->south)
+	if (!game->map->south)
+		error_and_cleanup(game, "Failed to load texture");
+	game->map->west = mlx_load_png(game->map->west)
+	if (!game->map->west)
+		error_and_cleanup(game, "Failed to load texture");
+	game->map->east = mlx_load_png(game->map->east)
+	if (!game->map->east)
+		error_and_cleanup(game, "Failed to load texture");
+}
 
 int game_loop(void * param)
 {
@@ -93,6 +108,7 @@ int game_loop(void * param)
 void setup_run_game(t_game *game, t_map *map)
 {
 	init_game(game, map);
+	load_textures(game);
 	mlx_loop_hook(game->mlx, &game_loop, game);
 	mlx_key_hook(game->mlx, key_handler, game);
 	mlx_loop(game->mlx);

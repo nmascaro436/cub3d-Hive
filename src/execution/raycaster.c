@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/04 16:35:08 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/08 11:48:36 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void init_ray(t_ray *ray, t_game *game, int x)
 	if (ray->dir.dir_x < 0)
 	{
 		ray->dir.step_x = -1; // go left
-		ray->dir.side_dist_x = (game->player->x - ray->dir.map_x ) * ray->dir.delta_dist_x;
+		ray->dir.side_dist_x = (game->player->x - ray->dir.map_x ) * ray->dir.delta_dist_x; // player specific position  - grid coordinate(left wall coordinate) * actual ray distance (ray might be diagonal)
 	}
 	else
 	{
@@ -62,7 +62,7 @@ void	dda_logic(t_ray *ray, t_map *map)
 			ray->dir.map_y += ray->dir.step_y;
 			ray->dir.side = 1;
 		}
-		if(map->map[ray->dir.map_y][ray->dir.map_x] == '1')
+		if(map->chart[ray->dir.map_y][ray->dir.map_x] == '1')
 		{
 			ray->dir.hit_wall = 1;
 			if (ray->dir.side == 0)
@@ -100,7 +100,22 @@ void	calculate_wall(t_ray *ray, t_map *game)
 
 void draw_ray(t_ray *ray, t_game *game)
 {
+	int y;
+	char *texture;
 
+	if (ray->wall.texture == NORTH_TEXT)
+		texture = game->map->north;
+	else if (ray->wall.texture == SOUTH_TEXT)
+		texture = game->map->south;
+	else if (ray->wall.texture == EAST_TEXT)
+		texture = game->map->east;
+	else
+		texture = game->map->west;
+	y = ray->wall.start_draw;
+	while (y <= ray->wall.end_draw)
+	{
+		y++;
+	}
 }
 
 // DDA traces a ray step by step through the map and checks each step if i've hit a wall, stops when i do
