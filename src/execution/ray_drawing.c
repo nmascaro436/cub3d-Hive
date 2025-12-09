@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 12:18:41 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/09 12:06:56 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/09 14:59:54 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static int get_texture_row(int y, t_ray *ray, mlx_texture_t *tex)
 		tex_y = tex->height - 1;
     return (tex_y);
 }
-
+// each pixel is 3 or 4 numbers (red, green, blue, alpha: the numbers are bytes from 0-255)
+// bytes per pixel is how many numbers each pixel uses (3 or 4) -> they are stored all in tex->pixels
 static int get_texture_color(mlx_texture_t *tex, int tex_x, int tex_y)
 {
     int pixel_i;
@@ -63,15 +64,15 @@ static int get_texture_color(mlx_texture_t *tex, int tex_x, int tex_y)
 	uint8_t b;
 	uint8_t a;
 
-	pixel_i = (tex_y * tex->width + tex_x) * tex->bytes_per_pixel;
-    r = tex->pixels[pixel_i + 0];
-    g = tex->pixels[pixel_i + 1];
-    b = tex->pixels[pixel_i + 2];
+	pixel_i = (tex_y * tex->width + tex_x) * tex->bytes_per_pixel; // WHERE THE PIXEL STARTS index of the first number of the pixel in the array = pixels above the row i want + how many pixels to the right in the current row * bytes per pixel
+    r = tex->pixels[pixel_i + 0]; // assign color of red
+    g = tex->pixels[pixel_i + 1]; // asign green 
+    b = tex->pixels[pixel_i + 2]; // assign blue
     if (tex->bytes_per_pixel == 4)
-        a = tex->pixels[pixel_i + 3];
+        a = tex->pixels[pixel_i + 3];  // assign alpha (transparency) if it exists
     else
-        a = 255;
-    return ((r << 24) | (g << 16) | (b << 8) | a);
+        a = 255; // opaque
+    return ((r << 24) | (g << 16) | (b << 8) | a); // pack all color components into a single 32 bit int (4 bytes)
 }
 void draw_ray(t_ray *ray, t_game *game, int x)
 {
