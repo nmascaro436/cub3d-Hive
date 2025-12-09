@@ -1,5 +1,23 @@
 #include "cub3d.h"
 
+/*
+* int	main(int argc, char **argv)
+{
+	t_game	*game;
+
+	if (argc == 2)
+	{
+		game = parse(argv[1]);
+		if (game)
+		{
+			print_map(game->map); 
+			setup_run_game(game, game->map);
+		}
+		cleanup function when game exits
+	}
+	return (0);
+}
+*/
 int	main(int argc, char **argv)
 {
 	t_game *game;
