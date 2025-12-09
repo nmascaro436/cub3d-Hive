@@ -6,21 +6,21 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/08 14:49:18 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/09 15:13:07 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void key_handler(mlx_key_data_t keydata, void *param)
+static void	key_handler(mlx_key_data_t keydata, void *param)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = (t_game *)param;
 	if (keydata.action == MLX_PRESS)
 	{
 		if (keydata.key == MLX_KEY_ESCAPE)
-				error_and_cleanup(game, "Game closed");
+			error_and_cleanup(game, "Game closed");
 		else if (keydata.key == MLX_KEY_W)
 			game->forward = true;
 		else if (keydata.key == MLX_KEY_S)
@@ -51,10 +51,10 @@ static void key_handler(mlx_key_data_t keydata, void *param)
 	}
 }
 
-static void draw_ceil_and_floor(t_game *game)
+static void	draw_ceil_and_floor(t_game *game)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < HEIGHT / 2)
@@ -79,7 +79,8 @@ static void draw_ceil_and_floor(t_game *game)
 		y++;
 	}
 }
-static void load_textures(t_game *game)
+
+static void	load_textures(t_game *game)
 {
 	game->map->north_tex = mlx_load_png(game->map->north); //changee validation in parsiiiiing!!!! not xpm
 	if (!game->map->north_tex)
@@ -95,9 +96,9 @@ static void load_textures(t_game *game)
 		error_and_cleanup(game, "Failed to load texture");
 }
 
-static int game_loop(void * param)
+static int	game_loop(void *param)
 {
-	t_game *game;
+	t_game	*game;
 
 	game = (t_game *)param;
 	move_player(game, game->map);
@@ -105,7 +106,8 @@ static int game_loop(void * param)
 	raycaster(game, game->map);
 	return (0);
 }
-void setup_run_game(t_game *game, t_map *map)
+
+void	setup_run_game(t_game *game, t_map *map)
 {
 	init_game(game, map);
 	load_textures(game);

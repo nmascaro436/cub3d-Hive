@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/08 10:00:04 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/09 15:14:58 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // to avoid moving inside the wall grid cell, so i dont accidentally go to far into a wall
 // it allows sliding against walls naturally
-static void move_try(t_game *game, t_map *map, double new_x, double new_y)
+static void	move_try(t_game *game, t_map *map, double new_x, double new_y)
 {
 	if (map->chart[(int)game->player->y][(int)new_x] != '1') // If I stay at my current row (Y), and move to the new column (X), is there a wall?
 		game->player->x = new_x; // if  not wall move horizontally
@@ -22,10 +22,10 @@ static void move_try(t_game *game, t_map *map, double new_x, double new_y)
 		game->player->y = new_y; // if not wall move vertically
 }
 
-static void handle_movement(t_game *game, t_map *map, double move_speed)
+static void	handle_movement(t_game *game, t_map *map, double move_speed)
 {
-	double new_x;
-	double new_y;
+	double	new_x;
+	double	new_y;
 
 	if (game->forward)
 	{
@@ -44,7 +44,7 @@ static void handle_movement(t_game *game, t_map *map, double move_speed)
 		new_x = game->player->x - game->player->plane_x * move_speed; // plane always points to right, so - plane means left (its like sidestepping)
 		new_y = game->player->y - game->player->plane_y * move_speed;
 		move_try(game, map, new_x, new_y);
-	}	
+	}
 	if (game->right)
 	{
 		new_x = game->player->x + game->player->plane_x * move_speed;
@@ -53,11 +53,11 @@ static void handle_movement(t_game *game, t_map *map, double move_speed)
 	}
 }
 
-static void rotate_calculation(double *x, double *y, double angle)
+static void	rotate_calculation(double *x, double *y, double angle)
 {
-	double old_x;
-	double cos_a;
-	double sin_a;
+	double	old_x;
+	double	cos_a;
+	double	sin_a;
 
 	old_x = *x; // save old x because we will overwrite it
 	cos_a = cos(angle); // how much of the rotation is "horizontal"
@@ -66,7 +66,7 @@ static void rotate_calculation(double *x, double *y, double angle)
 	*y = old_x * sin_a + *y * cos_a;
 }
 
-static void handle_rotation(t_game *game, double rotation_speed)
+static void	handle_rotation(t_game *game, double rotation_speed)
 {
 	if (game->rotate_left) // need to rotate both direction (where i look) and the plane (field of view)
 	{
@@ -80,10 +80,10 @@ static void handle_rotation(t_game *game, double rotation_speed)
 	}
 }
 
-void move_player(t_game *game, t_map *map)
+void	move_player(t_game *game, t_map *map)
 {
-	double move_speed;
-	double rotation_speed;
+	double	move_speed;
+	double	rotation_speed;
 
 	move_speed = 0.05; // smooth value so the movement is natural (in terms of a grid square: which is 1)
 	rotation_speed = 0.03; // smooth value so the rotation is natural (in terms of radians per frame: 1 radian == 57 degrees)

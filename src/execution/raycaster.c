@@ -6,14 +6,13 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/08 14:50:16 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/09 15:23:24 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-static void init_ray(t_ray *ray, t_game *game, int x)
+static void	init_ray(t_ray *ray, t_game *game, int x)
 {
 	ray->dir.camera_x = 2.0 * x / (double)WIDTH - 1.0; //converts pixel position to a num between -1 and 1 (we know were the ray is pointing at, "percentage" of how far left/right i am looking)
 	ray->dir.dir_x = game->player->dir_x + game->player->plane_x * ray->dir.camera_x; // where i am looking + peripheral vision * how far left/right ray is from center
@@ -27,7 +26,7 @@ static void init_ray(t_ray *ray, t_game *game, int x)
 	if (ray->dir.dir_x < 0)
 	{
 		ray->dir.step_x = -1; // go left
-		ray->dir.side_dist_x = (game->player->x - ray->dir.map_x ) * ray->dir.delta_dist_x; // player specific position  - grid coordinate(left wall coordinate) * actual ray distance (ray might be diagonal)
+		ray->dir.side_dist_x = (game->player->x - ray->dir.map_x) * ray->dir.delta_dist_x; // player specific position  - grid coordinate(left wall coordinate) * actual ray distance (ray might be diagonal)
 	}
 	else
 	{
@@ -37,7 +36,7 @@ static void init_ray(t_ray *ray, t_game *game, int x)
 	if (ray->dir.dir_y < 0)
 	{
 		ray->dir.step_y = -1; // go up
-		ray->dir.side_dist_y = (game->player->y - ray->dir.map_y ) * ray->dir.delta_dist_y;
+		ray->dir.side_dist_y = (game->player->y - ray->dir.map_y) * ray->dir.delta_dist_y;
 	}
 	else
 	{
@@ -62,7 +61,7 @@ static void	dda_logic(t_ray *ray, t_map *map)
 			ray->dir.map_y += ray->dir.step_y;
 			ray->dir.side = 1;
 		}
-		if(map->chart[ray->dir.map_y][ray->dir.map_x] == '1')
+		if (map->chart[ray->dir.map_y][ray->dir.map_x] == '1')
 		{
 			ray->dir.hit_wall = 1;
 			if (ray->dir.side == 0)
@@ -85,7 +84,7 @@ static void	dda_logic(t_ray *ray, t_map *map)
 
 static void	calculate_wall(t_ray *ray, t_map *game)
 {
-	if (ray->dir.side == 0) 
+	if (ray->dir.side == 0)
 		ray->wall.perp_dist = ray->dir.side_dist_x - ray->dir.delta_dist_x; // after dda side distance is the total distance from player to wall, we substract delta distance to go back to the line of the wall (not the full grid!)
 	else
 		ray->wall.perp_dist = ray->dir.side_dist_y - ray->dir.delta_dist_y;
@@ -93,7 +92,7 @@ static void	calculate_wall(t_ray *ray, t_map *game)
 	ray->wall.start_draw = (HEIGHT / 2) - (ray->wall.line_height / 2); // wall needs to be in the centre of the screen (start drawing in the middle but go up half the wall's height)
 	if (ray->wall.start_draw < 0) // if wall is really close and goes off screen
 		ray->wall.start_draw = 0; // we start drawing from the top of screen
-	ray->wall.end_draw = (HEIGHT / 2) + (ray->wall.line_height /  2);
+	ray->wall.end_draw = (HEIGHT / 2) + (ray->wall.line_height / 2);
 	if (ray->wall.end_draw >= HEIGHT) // if wall is really close
 		ray->wall.end_draw = HEIGHT - 1; // we put to bottom of screen
 }
@@ -101,10 +100,10 @@ static void	calculate_wall(t_ray *ray, t_map *game)
 // DDA traces a ray step by step through the map and checks each step if i've hit a wall, stops when i do
 // and records the distance
 ///each ray is a vertical stripe of pixels on the screen
-void raycaster(t_game *game, t_map *map)
+void	raycaster(t_game *game, t_map *map)
 {
-	int x;
-	t_ray ray;
+	int		x;
+	t_ray	ray;
 
 	x = 0;
 	while (x < WIDTH) //  loop through every vertical stripe (x pixel) on the screen
