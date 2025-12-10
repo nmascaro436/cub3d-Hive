@@ -6,11 +6,29 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/09 15:13:07 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 09:29:55 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	key_press_handler(mlx_key_data_t keydata, t_game *game)
+{
+	if (keydata.key == MLX_KEY_ESCAPE)
+		error_and_cleanup(game, "Game closed");
+	else if (keydata.key == MLX_KEY_W)
+		game->forward = true;
+	else if (keydata.key == MLX_KEY_S)
+		game->back = true;
+	else if (keydata.key == MLX_KEY_A)
+		game->left = true;
+	else if (keydata.key == MLX_KEY_D)
+		game->right = true;
+	else if (keydata.key == MLX_KEY_LEFT)
+		game->rotate_left = true;
+	else if (keydata.key == MLX_KEY_RIGHT)
+		game->rotate_right = true;
+}
 
 static void	key_handler(mlx_key_data_t keydata, void *param)
 {
@@ -18,22 +36,7 @@ static void	key_handler(mlx_key_data_t keydata, void *param)
 
 	game = (t_game *)param;
 	if (keydata.action == MLX_PRESS)
-	{
-		if (keydata.key == MLX_KEY_ESCAPE)
-			error_and_cleanup(game, "Game closed");
-		else if (keydata.key == MLX_KEY_W)
-			game->forward = true;
-		else if (keydata.key == MLX_KEY_S)
-			game->back = true;
-		else if (keydata.key == MLX_KEY_A)
-			game->left = true;
-		else if (keydata.key == MLX_KEY_D)
-			game->right = true;
-		else if (keydata.key == MLX_KEY_LEFT)
-			game->rotate_left = true;
-		else if (keydata.key == MLX_KEY_RIGHT)
-			game->rotate_right = true;
-	}
+		key_press_handler(keydata, game);
 	else if (keydata.action == MLX_RELEASE)
 	{
 		if (keydata.key == MLX_KEY_W)
@@ -48,35 +51,6 @@ static void	key_handler(mlx_key_data_t keydata, void *param)
 			game->rotate_left = false;
 		else if (keydata.key == MLX_KEY_RIGHT)
 			game->rotate_right = false;
-	}
-}
-
-static void	draw_ceil_and_floor(t_game *game)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < HEIGHT / 2)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			mlx_put_pixel(game->img, x, y, game->map->ceil_color);
-			x++;
-		}
-		y++;
-	}
-	y = HEIGHT / 2;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			mlx_put_pixel(game->img, x, y, game->map->floor_color);
-			x++;
-		}
-		y++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/09 15:14:58 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 09:58:50 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,34 @@
 
 // to avoid moving inside the wall grid cell, so i dont accidentally go to far into a wall
 // it allows sliding against walls naturally
-static void	move_try(t_game *game, t_map *map, double new_x, double new_y)
-{
-	if (map->chart[(int)game->player->y][(int)new_x] != '1') // If I stay at my current row (Y), and move to the new column (X), is there a wall?
-		game->player->x = new_x; // if  not wall move horizontally
-	if (map->chart[(int)new_y][(int)game->player->x] != '1') // If I stay at my current column (X), and move to the new row (Y), is there a wall?
-		game->player->y = new_y; // if not wall move vertically
-}
-
-static void	handle_movement(t_game *game, t_map *map, double move_speed)
+static void	move_try(t_game *game, double dir_x, double dir_y, double speed)
 {
 	double	new_x;
 	double	new_y;
 
+	new_x = game->player->x + dir_x * speed; // // move that much in the specified direction
+	new_y = game->player->y + dir_y * speed;
+	if (game->map->chart[(int)game->player->y][(int)new_x] != '1') // If I stay at my current row (Y), and move to the new column (X), is there a wall?
+		game->player->x = new_x; // if  not wall move horizontally
+	if (game->map->chart[(int)new_y][(int)game->player->x] != '1') // If I stay at my current column (X), and move to the new row (Y), is there a wall?
+		game->player->y = new_y; // if not wall move vertically
+}
+
+static void	handle_movement(t_game *game, double move_speed)
+{
 	if (game->forward)
-	{
-		new_x = game->player->x + game->player->dir_x * move_speed; // move that much in the specified direction
-		new_y = game->player->y + game->player->dir_y * move_speed;
-		move_try(game, map, new_x, new_y);
-	}
+		move_try(game, game->player->dir_x, game->player->dir_y, move_speed);
 	if (game->back)
-	{
-		new_x = game->player->x - game->player->dir_x * move_speed;
-		new_y = game->player->y - game->player->dir_y * move_speed;
-		move_try(game, map, new_x, new_y);
-	}
+		move_try(game, -game->player->dir_x, -game->player->dir_y, move_speed);
 	if (game->left)
 	{
-		new_x = game->player->x - game->player->plane_x * move_speed; // plane always points to right, so - plane means left (its like sidestepping)
-		new_y = game->player->y - game->player->plane_y * move_speed;
-		move_try(game, map, new_x, new_y);
+		move_try(game, -game->player->plane_x, -game->player->plane_y,
+			move_speed); //plane always points to right, so - plane means left (its like sidestepping)
 	}
 	if (game->right)
 	{
-		new_x = game->player->x + game->player->plane_x * move_speed;
-		new_y = game->player->y + game->player->plane_y * move_speed;
-		move_try(game, map, new_x, new_y);
+		move_try(game, game->player->plane_x, game->player->plane_y,
+			move_speed);
 	}
 }
 

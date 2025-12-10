@@ -6,23 +6,14 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/09 15:23:24 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:17:23 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	init_ray(t_ray *ray, t_game *game, int x)
+static void init_ray_steps(t_ray *ray, t_game *game)
 {
-	ray->dir.camera_x = 2.0 * x / (double)WIDTH - 1.0; //converts pixel position to a num between -1 and 1 (we know were the ray is pointing at, "percentage" of how far left/right i am looking)
-	ray->dir.dir_x = game->player->dir_x + game->player->plane_x * ray->dir.camera_x; // where i am looking + peripheral vision * how far left/right ray is from center
-	ray->dir.dir_y = game->player->dir_y + game->player->plane_y * ray->dir.camera_x;
-	ray->dir.map_x = (int)game->player->x; // where ray is (specific grid)
-	ray->dir.map_y = (int)game->player->y;
-	ray->dir.delta_dist_x = fabs(1 / ray->dir.dir_x); // fabs is floating point absolute value(means it makes negative numbers positive) and 1 because we want to know distance to cross 1 grid square
-	ray->dir.delta_dist_y = fabs(1 / ray->dir.dir_y);
-	ray->dir.hit_wall = 0;
-	ray->dir.side = 0;
 	if (ray->dir.dir_x < 0)
 	{
 		ray->dir.step_x = -1; // go left
@@ -45,6 +36,28 @@ static void	init_ray(t_ray *ray, t_game *game, int x)
 	}
 }
 
+static void	dda_check_hit(t_ray *ray, t_ma *map)
+{
+	if (map->chart[ray->dir.map_y][ray->dir.map_x] == '1')
+	{
+		ray->dir.hit_wall = 1;
+		if (ray->dir.side == 0)
+		{
+			if (ray->dir.step_x == 1)
+				ray->wall.texture = WEST_TEXT;
+			else
+				ray->wall.texture = EAST_TEXT;
+		}
+		else
+		{
+			if (ray->dir.step_y == 1)
+				ray->wall.texture = NORTH_TEXT;
+			else
+				ray->wall.texture = SOUTH_TEXT;
+		}
+	}
+}
+
 static void	dda_logic(t_ray *ray, t_map *map)
 {
 	while (ray->dir.hit_wall == 0)
@@ -61,24 +74,7 @@ static void	dda_logic(t_ray *ray, t_map *map)
 			ray->dir.map_y += ray->dir.step_y;
 			ray->dir.side = 1;
 		}
-		if (map->chart[ray->dir.map_y][ray->dir.map_x] == '1')
-		{
-			ray->dir.hit_wall = 1;
-			if (ray->dir.side == 0)
-			{
-				if (ray->dir.step_x == 1)
-					ray->wall.texture = WEST_TEXT;
-				else
-					ray->wall.texture = EAST_TEXT;
-			}
-			else
-			{
-				if (ray->dir.step_y == 1)
-					ray->wall.texture = NORTH_TEXT;
-				else
-					ray->wall.texture = SOUTH_TEXT;
-			}
-		}
+		dda_check_hit(ray, map);
 	}
 }
 
@@ -108,7 +104,8 @@ void	raycaster(t_game *game, t_map *map)
 	x = 0;
 	while (x < WIDTH) //  loop through every vertical stripe (x pixel) on the screen
 	{
-		init_ray(&ray, game, x);
+		init_ray_basic(&ray, game, x);
+		init_ray_steps(&ray, game);
 		dda_logic(&ray, map);
 		calculate_wall(&ray, game);
 		draw_ray(&ray, game, x);

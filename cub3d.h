@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/09 15:31:02 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:11:16 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,7 @@ void	setup_run_game(t_game *game, t_map *map);
 void	raycaster(t_game *game, t_map *map);
 void	draw_ray(t_ray *ray, t_game *game, int x);
 void	move_player(t_game *game, t_map *map);
+void	draw_ceil_and_floor(t_game *game);
+void	init_ray_basic(t_ray *ray, t_game *game, int x);
 
 #endif

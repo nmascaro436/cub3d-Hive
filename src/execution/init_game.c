@@ -6,27 +6,13 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/09 15:10:29 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:17:15 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	error_and_exit(char *str)
-{
-	printf("Error: %s\n", str);
-	exit (EXIT_FAILURE);
-}
-
-void	error_and_cleanup(t_game *game, char *str)
-{
-	printf("Error: %s\n", str);
-	if (game->mlx)
-		mlx_terminate(game->mlx);
-	exit (EXIT_FAILURE);
-}
-
-static void	init_player_execution(t_player *player)
+static void	init_player_north_south(t_player *player)
 {
 	if (player->view == 'N')
 	{
@@ -42,7 +28,11 @@ static void	init_player_execution(t_player *player)
 		player->plane_x = -0.66;
 		player->plane_y = 0;
 	}
-	else if (player->view == 'E')
+}
+
+static void	init_player_east_west(t_player *player)
+{
+	if (player->view == 'E')
 	{
 		player->dir_x = 1;
 		player->dir_y = 0;
@@ -70,7 +60,8 @@ void	init_game(t_game *game, t_map *map)
 		error_and_cleanup(game, "Image display failed");
 	game->map = map;
 	game->player = map->player;
-	init_player_execution(game->player);
+	init_player_north_south(game->player);
+	init_player_east_west(game->player);
 	game->forward = false;
 	game->back = false;
 	game->left = false;
