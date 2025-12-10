@@ -6,7 +6,7 @@
 #    By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 11:12:56 by nmascaro          #+#    #+#              #
-#    Updated: 2025/12/10 14:59:56 by nmascaro         ###   ########.fr        #
+#    Updated: 2025/12/10 15:24:07 by nmascaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRCS = src/main.c src/parser/parse.c src/parser/map.c src/parser/utils.c src/parser/textures.c \
- 		src/execution/game_loop.c src/execution/init_game.c \ src/execution/movement.c \
+ 		src/execution/game_loop.c src/execution/init_game.c src/execution/movement.c \
 		src/execution/ray_drawing.c src/execution/raycaster.c src/execution/execution_utils.c
 .SECONDARY: $(OBJS)
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/10 10:17:23 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:27:57 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void init_ray_steps(t_ray *ray, t_game *game)
 	}
 }
 
-static void	dda_check_hit(t_ray *ray, t_ma *map)
+static void	dda_check_hit(t_ray *ray, t_map *map)
 {
 	if (map->chart[ray->dir.map_y][ray->dir.map_x] == '1')
 	{
@@ -78,7 +78,7 @@ static void	dda_logic(t_ray *ray, t_map *map)
 	}
 }
 
-static void	calculate_wall(t_ray *ray, t_map *game)
+static void	calculate_wall(t_ray *ray)
 {
 	if (ray->dir.side == 0)
 		ray->wall.perp_dist = ray->dir.side_dist_x - ray->dir.delta_dist_x; // after dda side distance is the total distance from player to wall, we substract delta distance to go back to the line of the wall (not the full grid!)
@@ -107,7 +107,7 @@ void	raycaster(t_game *game, t_map *map)
 		init_ray_basic(&ray, game, x);
 		init_ray_steps(&ray, game);
 		dda_logic(&ray, map);
-		calculate_wall(&ray, game);
+		calculate_wall(&ray);
 		draw_ray(&ray, game, x);
 		x++;
 	}

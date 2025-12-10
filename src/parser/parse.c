@@ -52,6 +52,5 @@ t_game	*parse(char *argv)
 		return (NULL);
 	if (!parse_map(game, game->map, argv))
 		return (NULL);
-
 	return (game);
 }

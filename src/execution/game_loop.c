@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/10 09:29:55 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:45:55 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static void	key_handler(mlx_key_data_t keydata, void *param)
 
 static void	load_textures(t_game *game)
 {
+	printf("Inside load_textures\n");
 	game->map->north_tex = mlx_load_png(game->map->north); //changee validation in parsiiiiing!!!! not xpm
 	if (!game->map->north_tex)
 		error_and_cleanup(game, "Failed to load texture");
@@ -70,20 +71,20 @@ static void	load_textures(t_game *game)
 		error_and_cleanup(game, "Failed to load texture");
 }
 
-static int	game_loop(void *param)
+static void	game_loop(void *param)
 {
 	t_game	*game;
 
 	game = (t_game *)param;
-	move_player(game, game->map);
+	move_player(game);
 	draw_ceil_and_floor(game);
 	raycaster(game, game->map);
-	return (0);
 }
 
 void	setup_run_game(t_game *game, t_map *map)
 {
-	init_game(game, map);
+	printf("Entered setup_run_game!\n");
+	init_game_exec(game, map);
 	load_textures(game);
 	mlx_loop_hook(game->mlx, &game_loop, game);
 	mlx_key_hook(game->mlx, key_handler, game);

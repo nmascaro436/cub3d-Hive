@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/10 09:58:50 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:20:51 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ static void	handle_rotation(t_game *game, double rotation_speed)
 	}
 }
 
-void	move_player(t_game *game, t_map *map)
+void	move_player(t_game *game)
 {
 	double	move_speed;
 	double	rotation_speed;
 
 	move_speed = 0.05; // smooth value so the movement is natural (in terms of a grid square: which is 1)
 	rotation_speed = 0.03; // smooth value so the rotation is natural (in terms of radians per frame: 1 radian == 57 degrees)
-	handle_movement(game, map, move_speed);
+	handle_movement(game, move_speed);
 	handle_rotation(game, rotation_speed);
 }

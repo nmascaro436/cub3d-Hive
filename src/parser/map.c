@@ -43,12 +43,13 @@ bool	valid_char(t_game *game, char c, int y, int x)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
-		if (game->player->view)
+		if (game->player->view) // needs
 		{
 			return (false); //more than 1 player, clean uppppppppppp
 		}
 		else
 		{
+			game->map->player = game->player; // added this
 			game->player->x = (double)x;
 			game->player->y = (double)y;
 			game->player->view = c;

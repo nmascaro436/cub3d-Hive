@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/10 15:06:13 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:20:58 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_map
 	char			**chart;
 	int				max_x;
 	int				max_y;
+	t_player		*player;
 	int				floor_color; // before this was int *floor_color, is it mistake?
 	int				ceil_color;
 	char			*north;
@@ -99,13 +100,13 @@ typedef struct s_ray
 	t_ray_wall	wall;
 }	t_ray;
 
-void	init_game(t_game *game, t_map *map);
+void	init_game_exec(t_game *game, t_map *map);
 void	error_and_cleanup(t_game *game, char *str);
 void	error_and_exit(char *str);
 void	setup_run_game(t_game *game, t_map *map);
 void	raycaster(t_game *game, t_map *map);
 void	draw_ray(t_ray *ray, t_game *game, int x);
-void	move_player(t_game *game, t_map *map);
+void	move_player(t_game *game);
 void	draw_ceil_and_floor(t_game *game);
 void	init_ray_basic(t_ray *ray, t_game *game, int x);
 //parse.c
