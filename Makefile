@@ -6,15 +6,15 @@
 #    By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 11:12:56 by nmascaro          #+#    #+#              #
-#    Updated: 2025/11/26 15:48:20 by nmascaro         ###   ########.fr        #
+#    Updated: 2025/12/10 09:15:43 by nmascaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = main.c parse.c init_game.c
->>>>>>> dev
+SRCS = main.c parse.c src/execution/game_loop.c src/execution/init_game.c \
+		src/execution/movement.c src/execution/ray_drawing.c src/execution/raycaster.c \
 .SECONDARY: $(OBJS)
 OBJS = $(SRCS:.c=.o)
 MLX_DIR = mlx
