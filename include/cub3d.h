@@ -6,18 +6,20 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/10 10:11:16 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:06:13 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-# include "libft/libft.h"
-# include "libft/get_next_line.h"
+
+# include "libft.h"
+# include "get_next_line.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <MLX42/MLX42.h>
 # include <math.h>
+# include <stdbool.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -25,7 +27,6 @@
 # define SOUTH_TEXT 2
 # define WEST_TEXT 3
 # define EAST_TEXT 4
-
 typedef struct s_player
 {
 	double	x;
@@ -39,9 +40,10 @@ typedef struct s_player
 
 typedef struct s_map
 {
+	char			**chart;
 	int				max_x;
 	int				max_y;
-	int				floor_color;
+	int				floor_color; // before this was int *floor_color, is it mistake?
 	int				ceil_color;
 	char			*north;
 	char			*south;
@@ -97,7 +99,6 @@ typedef struct s_ray
 	t_ray_wall	wall;
 }	t_ray;
 
-t_game	*parse(char **argv);
 void	init_game(t_game *game, t_map *map);
 void	error_and_cleanup(t_game *game, char *str);
 void	error_and_exit(char *str);
@@ -107,5 +108,20 @@ void	draw_ray(t_ray *ray, t_game *game, int x);
 void	move_player(t_game *game, t_map *map);
 void	draw_ceil_and_floor(t_game *game);
 void	init_ray_basic(t_ray *ray, t_game *game, int x);
+//parse.c
+t_game	*parse(char *argv);
+
+//map.c
+bool	parse_map(t_game *game, t_map *map, char *argv);
+bool	parse_textures(t_game *game, char *argv);
+
+//textures.c
+bool	check_textures(t_game game, t_map *map, char *line);
+
+//utils.c
+void    free_all(t_game *game);
+bool    valid_file(char *argv, char *file, int len);
+void	print_map(t_map *map);
+void	print_player(t_player *player);
 
 #endif

@@ -6,16 +6,16 @@
 #    By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 11:12:56 by nmascaro          #+#    #+#              #
-#    Updated: 2025/12/10 09:36:22 by nmascaro         ###   ########.fr        #
+#    Updated: 2025/12/10 14:59:56 by nmascaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = main.c parse.c src/execution/game_loop.c src/execution/init_game.c \
-		src/execution/movement.c src/execution/ray_drawing.c src/execution/raycaster.c \
-		src/execution/execution_utils.c
+SRCS = src/main.c src/parser/parse.c src/parser/map.c src/parser/utils.c src/parser/textures.c \
+ 		src/execution/game_loop.c src/execution/init_game.c \ src/execution/movement.c \
+		src/execution/ray_drawing.c src/execution/raycaster.c src/execution/execution_utils.c
 .SECONDARY: $(OBJS)
 OBJS = $(SRCS:.c=.o)
 MLX_DIR = mlx
@@ -25,6 +25,8 @@ MLX_LINK_FLAGS = $(MLX_LIB) -ldl -lglfw -pthread -lm
 
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
+
+INCLUDES = -I$(LIBFT_DIR) -Iinclude
 
 all: $(MLX_LIB) $(LIBFT_LIB) $(NAME)
 
@@ -39,11 +41,11 @@ $(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(NAME): $(OBJS) $(LIBFT_LIB) $(MLX_LIB)
-	$(CC) $(CFLAGS) $(OBJS) $(MLX_LINK_FLAGS) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(MLX_LINK_FLAGS) $(LIBFT_LIB) -o $(NAME)
 	@echo "cub3D executable created"
 
 %.o: %.c
-	@$(CC) $(CFLAGS) $(MLX_FLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) $(MLX_FLAGS) -c $< -o $@
 	
 clean:
 	@rm -f $(OBJS)
