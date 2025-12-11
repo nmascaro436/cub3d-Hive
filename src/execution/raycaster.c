@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 14:04:29 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:48:58 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,39 @@
 /*
 * Initializes the stepping direction and initial side distances for the ray.
 * Step direction determines if we move left/right or up/down.
-* Side distance is how far the ray has to travel to reach next vertical or horizontal
-* grid line;
-* - For negative directions, the next grid line is the left/top edge of the current tile.
-* - For positive directions, the next grid line is the right/bottom edge of the current tile.
+* Side distance is how far the ray has to travel to reach next vertical
+* or horizontal grid line;
+* - For negative directions, the next grid line is the left/top edge of
+* the current tile.
+* - For positive directions, the next grid line is the right/bottom edge of
+* the current tile.
 * - Multiplies by delta_dist to convert from grid units to actual ray distance.
 */
-static void init_ray_steps(t_ray *ray, t_game *game)
+static void	init_ray_steps(t_ray *ray, t_game *game)
 {
 	if (ray->dir.dir_x < 0)
 	{
 		ray->dir.step_x = -1;
-		ray->dir.side_dist_x = (game->player->x - ray->dir.map_x) * ray->dir.delta_dist_x;
+		ray->dir.side_dist_x = (game->player->x - ray->dir.map_x)
+			* ray->dir.delta_dist_x;
 	}
 	else
 	{
 		ray->dir.step_x = 1;
-		ray->dir.side_dist_x = (ray->dir.map_x + 1.0 - game->player->x) * ray->dir.delta_dist_x;
+		ray->dir.side_dist_x = (ray->dir.map_x + 1.0 - game->player->x)
+			* ray->dir.delta_dist_x;
 	}
 	if (ray->dir.dir_y < 0)
 	{
 		ray->dir.step_y = -1;
-		ray->dir.side_dist_y = (game->player->y - ray->dir.map_y) * ray->dir.delta_dist_y;
+		ray->dir.side_dist_y = (game->player->y - ray->dir.map_y)
+			* ray->dir.delta_dist_y;
 	}
 	else
 	{
 		ray->dir.step_y = 1;
-		ray->dir.side_dist_y = (ray->dir.map_y + 1.0 - game->player->y) * ray->dir.delta_dist_y;
+		ray->dir.side_dist_y = (ray->dir.map_y + 1.0 - game->player->y)
+			* ray->dir.delta_dist_y;
 	}
 }
 
@@ -100,13 +106,15 @@ static void	dda_logic(t_ray *ray, t_map *map)
 }
 
 /*
-* Calculates the perpendicular distance from player to wall and determines the wall's
-* dimensions in the screen:
-* - After DDA, side_dist contains the full distance traveled, we substract delta_dist
-* to get distance to the actual line (not the full grid square).
-* - Wall height is inversely proportional to distance (small distance = bigger wall).
+* Calculates the perpendicular distance from player to wall and determines
+* the wall's dimensions in the screen:
+* - After DDA, side_dist contains the full distance traveled, we substract
+* delta_dist to get distance to the actual line (not the full grid square).
+* - Wall height is inversely proportional to distance
+* (small distance = bigger wall).
 * Centers the wall vertically on screen by calculating start/end draw positions.
-* Prevents wall going off screen by putting the start/end to bounds of the screen.
+* Prevents wall going off screen by putting the start/end to bounds 
+* of the screen.
 */
 static void	calculate_wall(t_ray *ray)
 {
@@ -124,8 +132,9 @@ static void	calculate_wall(t_ray *ray)
 }
 
 /*
-* Main raycasting function that renders the 3D view. Casts one ray per screen column (x)
-* from left to right across the screen width. Does all the necessary steps to create
+* Main raycasting function that renders the 3D view.
+* Casts one ray per screen column (x) from left to right across the 
+* screen width. Does all the necessary steps to create
 * the illusion of the map being 3D.
 */
 void	raycaster(t_game *game, t_map *map)

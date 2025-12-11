@@ -6,15 +6,15 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 12:18:41 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 11:24:34 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:45:50 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-* Selects appropriate wall texture based on the direction the ray hit the wall from.
-* Returns corresponding texture pointer.
+* Selects appropriate wall texture based on the direction
+* the ray hit the wall from. Returns corresponding texture pointer.
 */
 static mlx_texture_t	*texture_selection(t_ray *ray, t_map *map)
 {
@@ -30,12 +30,14 @@ static mlx_texture_t	*texture_selection(t_ray *ray, t_map *map)
 
 /*
 * Calculates which column of the texture should be used for this ray:
-* - Determines hit position along the wall perpendicular distance (from player to wall)
-* and ray direction.
+* - Determines hit position along the wall perpendicular distance
+* (from player to wall) and ray direction.
 * - For the vertical side of the wall, uses the y position since the x
 * is fixed and for horizontal it's the opposite.
-* - Extracts the decimal part to get the position inside the tile (to get the exact pixel).
-* - Scales hit position to texture width to know which column of the texture the hit corresponds.
+* - Extracts the decimal part to get the position inside the tile
+* (to get the exact pixel).
+* - Scales hit position to texture width to know which column
+* of the texture the hit corresponds.
 * - Performs safety checks to avoid going out of bounds.
 */
 static int	get_texture_column(t_ray *ray, mlx_texture_t *tex, t_player *p)
@@ -68,7 +70,8 @@ static int	get_texture_row(int y, t_ray *ray, mlx_texture_t *tex)
 	double	tex_pos;
 	int		tex_y;
 
-	tex_pos = (double)(y - ray->wall.start_draw) / (double)ray->wall.line_height;
+	tex_pos = (double)(y - ray->wall.start_draw)
+		/ (double)ray->wall.line_height;
 	tex_y = (int)(tex_pos * tex->height);
 	if (tex_y < 0)
 		tex_y = 0;
@@ -83,8 +86,8 @@ static int	get_texture_row(int y, t_ray *ray, mlx_texture_t *tex)
 * Calculates the byte index where this pixel's color data starts (skips all rows
 * above, moves right within the current row to find pixel position and multiplies
 * by bytes per pixel to convert from pixel index to byte index in the 1D array).
-* Extracts red, green, blue and alpha (transparency) components and puts them into
-* a single 32 bit int in RGBA format using bit shifting.
+* Extracts red, green, blue and alpha (transparency) components and puts them
+* into a single 32 bit int in RGBA format using bit shifting.
 */
 static int	get_texture_color(mlx_texture_t *tex, int tex_x, int tex_y)
 {
@@ -111,7 +114,8 @@ static int	get_texture_color(mlx_texture_t *tex, int tex_x, int tex_y)
 * by this ray:
 * - Selects texture.
 * - Calculates which column to use based on hit position.
-* - For each pixel on that column, determines texture row, retrieves color and renders.
+* - For each pixel on that column, determines texture row, retrieves
+* color and renders.
 */
 void	draw_ray(t_ray *ray, t_game *game, int x)
 {

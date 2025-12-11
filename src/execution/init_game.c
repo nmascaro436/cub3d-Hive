@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 14:35:36 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:40:50 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /*
 * Initializes player direction and camera plane for N and S orientations:
 * - N faces up with camera plane pointing right.
-* - S faces down with camera plane pointing "left" (it's right when facing south).
+* - S faces down with camera plane pointing "left"
+* (it's right when facing south).
 * Plane value creates a typical human view FOV, plane has to be perpendicular
 * to direction to ensure rendering without distortion.
 */
@@ -64,7 +65,8 @@ static void	init_player_east_west(t_player *player)
 * Initializes game structure and MLX system:
 * - Creates window with the specified dimensions.
 * - Allocates main rendering image and displays it.
-* - Sets up player's initial direction and camera plane based on spawn orientation.
+* - Sets up player's initial direction and camera plane based 
+* on spawn orientation.
 * - Initializes movement and rotation flags to false.
 * If there's any error, game cleans up and exits.
 */

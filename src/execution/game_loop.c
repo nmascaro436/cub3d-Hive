@@ -6,15 +6,16 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 14:23:00 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:40:16 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-* Key handler helper. Handles key press by setting the flags to true. WASD control movement, 
-* arrow keys control camera rotation and ESC exits the game.
+* Key handler helper. Handles key press by setting the flags to true.
+* WASD control movement, arrow keys control camera rotation,
+* and ESC exits the game.
 */
 static void	key_press_handler(mlx_key_data_t keydata, t_game *game)
 {
@@ -33,9 +34,10 @@ static void	key_press_handler(mlx_key_data_t keydata, t_game *game)
 	else if (keydata.key == MLX_KEY_RIGHT)
 		game->rotate_right = true;
 }
+
 /*
-* Main keyboard input handler. Calls key_press_handler and sets the flags back to false
-* when the keys are released.
+* Main keyboard input handler. Calls key_press_handler and sets
+* the flags back to false when the keys are released.
 */
 static void	key_handler(mlx_key_data_t keydata, void *param)
 {
@@ -60,6 +62,7 @@ static void	key_handler(mlx_key_data_t keydata, void *param)
 			game->rotate_right = false;
 	}
 }
+
 /*
 * Loads N, S, E, W wall textures from png files.
 * If they fail to load, game exits and cleans up resources.
@@ -97,9 +100,9 @@ static void	game_loop(void *param)
 }
 
 /*
-* Entry point for the execution of the game. Initializes game structure and MLX window,
-* loads wall textures, runs the game loop and sets up key handler. Loop runs until
-* the window is closed or ESC is pressed.
+* Entry point for the execution of the game. Initializes game structure
+* and MLX window, loads wall textures, runs the game loop and sets up
+* key handler. Loop runs until the window is closed or ESC is pressed.
 */
 void	setup_run_game(t_game *game, t_map *map)
 {

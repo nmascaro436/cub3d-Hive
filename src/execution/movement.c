@@ -6,17 +6,18 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 10:20:26 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:43:55 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-* Attempts to move the player in a specified direction by calculating the new position
-* based on direction vector and movement speed.
-* Allows the player to slide against the walls naturally instead of moving inside the wall
-* grid cell and getting stuck. Checks first horizontal movement (keeping y constant) and
+* Attempts to move the player in a specified direction by calculating 
+* the new position based on direction vector and movement speed.
+* Allows the player to slide against the walls naturally instead of 
+* moving inside the wall grid cell and getting stuck. 
+* Checks first horizontal movement (keeping y constant) and
 * then vertical movement (keeping x constant).
 */
 static void	move_try(t_game *game, double dir_x, double dir_y, double speed)
@@ -35,8 +36,9 @@ static void	move_try(t_game *game, double dir_x, double dir_y, double speed)
 /*
 * Handles player movement based on pressed movement keys:
 * - W/S keys move forward/backward along the direction vector.
-* - A/D keys move  left/right perpendicular to the direction using the plane vector
-* (plane vector always points to the right of the dir vector, negating it means moving left).
+* - A/D keys move  left/right perpendicular to the direction using
+* the plane vector (plane vector always points to the right of the
+* dir vector, negating it means moving left).
 */
 static void	handle_movement(t_game *game, double move_speed)
 {
@@ -76,29 +78,35 @@ static void	rotate_calculation(double *x, double *y, double angle)
 }
 
 /*
-* Handles camera rotation based on arrow key input. Rotates both the direction vector
-* (where the player is looking) and the plane vector (field of view). Both need to be
-* rotate together to keep the FOV perpendicular. Left arrow rotates counter-clockwise
+* Handles camera rotation based on arrow key input. Rotates both
+* the direction vector (where the player is looking) and the 
+* plane vector (field of view). Both need to rotate together to keep
+* the FOV perpendicular. Left arrow rotates counter-clockwise
 * (positive angle), right arrow rotates clockwise (negative angle).
 */
 static void	handle_rotation(t_game *game, double rotation_speed)
 {
 	if (game->rotate_left)
 	{
-		rotate_calculation(&game->player->dir_x, &game->player->dir_y, rotation_speed);
-		rotate_calculation(&game->player->plane_x, &game->player->plane_y, rotation_speed);
+		rotate_calculation(&game->player->dir_x,
+			&game->player->dir_y, rotation_speed);
+		rotate_calculation(&game->player->plane_x,
+			&game->player->plane_y, rotation_speed);
 	}
 	if (game->rotate_right)
 	{
-		rotate_calculation(&game->player->dir_x, &game->player->dir_y, -rotation_speed);
-		rotate_calculation(&game->player->plane_x, &game->player->plane_y, -rotation_speed);
+		rotate_calculation(&game->player->dir_x,
+			&game->player->dir_y, -rotation_speed);
+		rotate_calculation(&game->player->plane_x,
+			&game->player->plane_y, -rotation_speed);
 	}
 }
 
 /*
 * Main player movement update called every frame. Sets movement speed (based on
-units per frame, 1 unit = 1 grid square) and rotation speed (based on radians per frame,
-1 radian ~= 57 degrees) to values that provide smooth and natural feeling. 
+* units per frame, 1 unit = 1 grid square) and rotation speed (based on radians
+* per frame, 1 radian ~= 57 degrees) to values that provide smooth
+* and natural feeling. 
 */
 void	move_player(t_game *game)
 {
