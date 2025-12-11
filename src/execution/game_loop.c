@@ -6,12 +6,16 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/10 15:45:55 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:23:00 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+* Key handler helper. Handles key press by setting the flags to true. WASD control movement, 
+* arrow keys control camera rotation and ESC exits the game.
+*/
 static void	key_press_handler(mlx_key_data_t keydata, t_game *game)
 {
 	if (keydata.key == MLX_KEY_ESCAPE)
@@ -29,7 +33,10 @@ static void	key_press_handler(mlx_key_data_t keydata, t_game *game)
 	else if (keydata.key == MLX_KEY_RIGHT)
 		game->rotate_right = true;
 }
-
+/*
+* Main keyboard input handler. Calls key_press_handler and sets the flags back to false
+* when the keys are released.
+*/
 static void	key_handler(mlx_key_data_t keydata, void *param)
 {
 	t_game	*game;
@@ -53,11 +60,13 @@ static void	key_handler(mlx_key_data_t keydata, void *param)
 			game->rotate_right = false;
 	}
 }
-
+/*
+* Loads N, S, E, W wall textures from png files.
+* If they fail to load, game exits and cleans up resources.
+*/
 static void	load_textures(t_game *game)
 {
-	printf("Inside load_textures\n");
-	game->map->north_tex = mlx_load_png(game->map->north); //changee validation in parsiiiiing!!!! not xpm
+	game->map->north_tex = mlx_load_png(game->map->north);
 	if (!game->map->north_tex)
 		error_and_cleanup(game, "Failed to load texture");
 	game->map->south_tex = mlx_load_png(game->map->south);
@@ -71,6 +80,12 @@ static void	load_textures(t_game *game)
 		error_and_cleanup(game, "Failed to load texture");
 }
 
+/*
+* Game loop that runs every frame. Does the following steps:
+* - Updates player's position and rotation based on pressed keys.
+* - Renders the scene by drawing the ceiling and floor.
+* - Performs raycasting loop to render the walls.
+*/
 static void	game_loop(void *param)
 {
 	t_game	*game;
@@ -81,9 +96,13 @@ static void	game_loop(void *param)
 	raycaster(game, game->map);
 }
 
+/*
+* Entry point for the execution of the game. Initializes game structure and MLX window,
+* loads wall textures, runs the game loop and sets up key handler. Loop runs until
+* the window is closed or ESC is pressed.
+*/
 void	setup_run_game(t_game *game, t_map *map)
 {
-	printf("Entered setup_run_game!\n");
 	init_game_exec(game, map);
 	load_textures(game);
 	mlx_loop_hook(game->mlx, &game_loop, game);

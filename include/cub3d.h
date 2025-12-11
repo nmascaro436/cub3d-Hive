@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/10 15:20:58 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:26:58 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct s_ray
 
 void	init_game_exec(t_game *game, t_map *map);
 void	error_and_cleanup(t_game *game, char *str);
-void	error_and_exit(char *str);
 void	setup_run_game(t_game *game, t_map *map);
 void	raycaster(t_game *game, t_map *map);
 void	draw_ray(t_ray *ray, t_game *game, int x);

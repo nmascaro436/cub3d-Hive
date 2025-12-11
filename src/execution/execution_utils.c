@@ -6,12 +6,17 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 09:28:48 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/10 10:11:07 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:30:58 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+* Renders the ceiling and floor by filling the top and bottom halves of the
+* screen with colors. They are drawn before the walls so that the wall rendering
+* overwrites these colors.
+*/
 void	draw_ceil_and_floor(t_game *game)
 {
 	int	x;
@@ -41,29 +46,54 @@ void	draw_ceil_and_floor(t_game *game)
 	}
 }
 
+/*
+* Initializes basic ray properties for a given screen column::
+* - Calculates camera_x by converting the x position to a value between
+* -1 (left edge) and 1 (right edge), that represents how far the ray is from 
+* the center of view.
+* - Computes ray direction by combining the player's looking direction with the camera
+* plane scaled by camera_x, creating the FOV effect.
+* - Sets the initial map grid position of the ray to the player's current tile.
+* - Calculates delta distances (distance to cross one full grid square) using ray
+* direction.
+*/
 void	init_ray_basic(t_ray *ray, t_game *game, int x)
 {
-	ray->dir.camera_x = 2.0 * x / (double)WIDTH - 1.0; //converts pixel position to a num between -1 and 1 (we know were the ray is pointing at, "percentage" of how far left/right i am looking)
-	ray->dir.dir_x = game->player->dir_x + game->player->plane_x * ray->dir.camera_x; // where i am looking + peripheral vision * how far left/right ray is from center
+	ray->dir.camera_x = 2.0 * x / (double)WIDTH - 1.0;
+	ray->dir.dir_x = game->player->dir_x + game->player->plane_x * ray->dir.camera_x;
 	ray->dir.dir_y = game->player->dir_y + game->player->plane_y * ray->dir.camera_x;
-	ray->dir.map_x = (int)game->player->x; // where ray is (specific grid)
+	ray->dir.map_x = (int)game->player->x;
 	ray->dir.map_y = (int)game->player->y;
-	ray->dir.delta_dist_x = fabs(1 / ray->dir.dir_x); // fabs is floating point absolute value(means it makes negative numbers positive) and 1 because we want to know distance to cross 1 grid square
+	ray->dir.delta_dist_x = fabs(1 / ray->dir.dir_x);
 	ray->dir.delta_dist_y = fabs(1 / ray->dir.dir_y);
 	ray->dir.hit_wall = 0;
 	ray->dir.side = 0;
 }
 
-void	error_and_exit(char *str)
-{
-	printf("Error: %s\n", str);
-	exit (EXIT_FAILURE);
-}
-
+/*
+* Prints an error message, cleans up allocated MLX resources,
+* and exits the program with failure status.
+*/
 void	error_and_cleanup(t_game *game, char *str)
 {
 	printf("Error: %s\n", str);
-	if (game->mlx)
-		mlx_terminate(game->mlx);
+	if (game)
+	{
+		if (game->map)
+		{
+			if (game->map->north_tex)
+				mlx_delete_texture(game->map->north_tex);
+			if (game->map->south_tex)
+				mlx_delete_texture(game->map->south_tex);
+			if (game->map->west_tex)
+				mlx_delete_texture(game->map->west_tex);
+			if (game->map->east_tex)
+				mlx_delete_texture(game->map->east_tex);
+		}
+		if (game->img && game->mlx)
+			mlx_delete_image(game->mlx, game->img);
+		if (game->mlx)
+			mlx_terminate(game->mlx);
+	}
 	exit (EXIT_FAILURE);
 }
