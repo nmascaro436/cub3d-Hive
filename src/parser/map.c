@@ -80,7 +80,6 @@ bool	validate_map(t_game *game, t_map *map, char **chart)
 		}
 		i++;
 	}
-	print_player(game->player);
 	if (!game->player)
 		return (false);
 	else
@@ -97,6 +96,7 @@ bool	parse_map(t_game *game, t_map *map, char *argv)
 	int 	len;
 	int 	fd;
 	int		i;
+	int j = 0;
 
 	i = 0;
 	len = 0;
@@ -113,27 +113,35 @@ bool	parse_map(t_game *game, t_map *map, char *argv)
 		perror(".cub open failed");
 		return (false);
 	}
-	while (i < map->max_y)
+	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break; //free stuffff
-		len = ft_strlen(line);
-		if (len > 0 && line[len - 1] == '\n')
-			line[len-1] = '\0';
-		len = ft_strlen(line);
-		if (len > map->max_x)
-			map->max_x = len;
-		map->chart[i] = ft_strdup(line);
-		if (!map->chart[i])
+			break;
+		if (i >= map->start_line)
 		{
-			//freeeeeee
-			return (false);
+			if (j < map->max_y)
+			{
+			len = ft_strlen(line);
+			if (len > 0 && line[len - 1] == '\n')
+				line[len-1] = '\0';
+			len = ft_strlen(line);
+			if (len > map->max_x)
+				map->max_x = len;
+			map->chart[j] = ft_strdup(line);
+			if (!map->chart[j])
+			{
+				free_chart(map, j-1);
+				free_all(game);
+				return (false);
+			}
+			j++;
+			}
 		}
 		i++;
 		free(line);
 	}
-	map->chart[i] = NULL;
+	map->chart[j] = NULL;
 	close (fd);
 	validate_map(game, map, map->chart);
 	return (true);
@@ -149,11 +157,11 @@ int	check_state(t_map *map)
 bool	parse_textures(t_game *game, char *argv)
 {
 	char	*line;
-	int		map_state;
 	int 	len;
-	//int		map_start = 0;
+	int		map_state = 0;
 	int 	fd;
 
+	
 	fd = open(argv, O_RDONLY);
 	if (fd < 0)
 	{
@@ -170,20 +178,25 @@ bool	parse_textures(t_game *game, char *argv)
 		len = ft_strlen(line);
 		if (len > 0 && line[len - 1] == '\n')
 			line[len-1] = '\0';
-		/*if (!map_state)
+		if (!map_state)
 		{
-			if (empty_lines(line));
-				continue;
-			if(!check_textures(game, game->map, line))
-				return (false);
+			game->map->start_line++;
+			//if (empty_lines(line));
+				//continue;
+			if(!check_textures(game->map, line))
+			{
+				free(line);
+				free_all(game);
+				close(fd);
+				return(false);
+			}
 			map_state = check_state(game->map);
-
 		}
 		else
 		{
-			if (!empty_lines(line))*/
+			//if (!empty_lines(line))
 		game->map->max_y++;
-		//}
+		}
 		free(line);
 	}
 	close (fd);

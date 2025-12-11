@@ -1,24 +1,25 @@
 #include "cub3d.h"
 
-void	free_chart(t_map *map)
+void	free_chart(t_map *map, int y)
 {
 	int i = 0;
-	while (i < map->max_y)
+	while (i < y)
 	{
 		free(map->chart[i]);
 		i++;
 	}
-	free (map->chart);
-
+	free(map->chart);
 }
 
 void    free_all(t_game *game)
 {
-	if (game->map->chart)
-		free_chart(game->map);
+	free(game->map->north);
+	free(game->map->south);
+	free(game->map->west);
+	free(game->map->east);
 	free (game->player);
 	free (game->map);
-	free (game);   
+	free (game);
 }
 
 bool    valid_file(char *argv, char *file, int len)
@@ -49,10 +50,22 @@ void	print_map(t_map *map)
 	}
 	printf("mapX = %d\n", map->max_x);
 	printf("mapY = %d\n", map->max_y);
+	printf("\n");
 }
 void	print_player(t_player *player)
 {
 	printf("player_x = %f\n", player->x);
 	printf("player_y = %f\n", player->y);
 	printf("player_view = %c\n", player->view);
+	printf("\n");
+}
+void	print_textures(t_map *map)
+{
+	printf("north = %s\n", map->north);
+	printf("south = %s\n", map->south);
+	printf("west = %s\n", map->west);
+	printf("east = %s\n", map->east);
+	printf("floor color = %d\n", map->floor_color);
+	printf("ceil color = %d\n", map->ceil_color);
+	printf("\n");
 }

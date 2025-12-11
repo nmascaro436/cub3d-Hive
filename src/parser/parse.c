@@ -14,7 +14,7 @@ t_game	*init_game()
 	game = malloc(sizeof(t_game));
 	if (!game)
 		return (NULL);
-	//ft_memset(game, 0, sizeof(t_game));
+	ft_memset(game, 0, sizeof(t_game));
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
 	{
@@ -49,9 +49,10 @@ t_game	*parse(char *argv)
 		return(NULL);
 	}
 	if (!parse_textures(game, argv))
+	{
 		return (NULL);
+	}
 	if (!parse_map(game, game->map, argv))
 		return (NULL);
-
 	return (game);
 }

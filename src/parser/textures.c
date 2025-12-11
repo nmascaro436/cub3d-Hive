@@ -1,9 +1,9 @@
 #include "cub3d.h"
 
-/*
+
 int	get_color(char	*line)
 {
-	int color[3];
+	int color[3] = {0, 0, 0};
 	int	i;
 	int	j;
   
@@ -16,20 +16,23 @@ int	get_color(char	*line)
 			color[j] = color[j] * 10 +line[i] - '0';
 			i++;
 		}
-		if ((line[i] != ',' && ft_isdigit(line[i+1])) || line[i] != '\0')
-			return (-1);
+		if (line[i] != ',' && line[i] != '\0') //&& ft_isdigit(line[i+1]))
+			return (-2);
 		i++;
 		j++;
+		
 	}
 	if (j != 3)
 		return(-1);
-	while(j >= 0)
+	while(j > 0)
 	{
+		j--;
 		if (color[j] > 255 || color[j] < 0)
 			return(-1);
-		j--;
+		
 	}
-	return ((color[0] << 16) | (color[1] << 8) | color[2]);
+	int res = ((color[0] << 16) | (color[1] << 8) | color[2]);
+	return (res);
 }
 
 bool	store_color(t_map *map, char *line)
@@ -50,32 +53,34 @@ bool	store_color(t_map *map, char *line)
 		else
 			return(true);
 	}
+	return (false);
 }
 
 bool	store_textures(char **p, char *line)
 {
-	//more valid checks????
 	int len;
 
-	len = strlen(line) - 3;
-	*p = ft_substr(line, 3 , len);
-	if (!p)
+	len = ft_strlen(line) - 5;
+	*p = ft_substr(line, 5 , len);
+	if (!*p)
 	{
-		return(NULL);
+		return(false);
 	}
-	if (!valid_file(*p, ".xpm", 5))
+	if (!valid_file(*p, ".png", 5))
 	{
-		free(*p);
+	//	free(*p);
 		return(false);
 	}
 	return (true);
 }
 
 
-bool	check_textures(t_game game, t_map *map, char *line)
+bool	check_textures(t_map *map, char *line)
 {
+	
 	if (ft_strncmp(line, "NO ", 3) == 0)
 	{
+		
 		if (map->north)
 			return (false);
 		else
@@ -90,6 +95,7 @@ bool	check_textures(t_game game, t_map *map, char *line)
 	}
 	else if (ft_strncmp(line, "WE ", 3) == 0)
 	{
+		
 		if (map->west)
 			return(false);
 		else
@@ -104,6 +110,6 @@ bool	check_textures(t_game game, t_map *map, char *line)
 	}
 	else
 		return (store_color(map, line));//free stuff
-}*/
+}
 
 
