@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 14:27:25 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:35:36 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	init_game_exec(t_game *game, t_map *map)
 	printf("Before mlx_init\n");
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
 	if (!game->mlx)
-		error_and_cleanup("MLX initialization failed");
+		error_and_cleanup(game, "MLX initialization failed");
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (!game->img)
 		error_and_cleanup(game, "Image creation failed");
