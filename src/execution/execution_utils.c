@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 09:28:48 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 10:55:25 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/12 11:30:09 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,14 @@ void	error_and_cleanup(t_game *game, char *str)
 }
 
 /*
-*
+* Checks if the position is within the bounds of the map:
+* - map_y is within the maps's height.
+* - map_x is within the bounds of the current row's length.
+* Returns true if valid, false otherwise.
 */
 bool	is_position_valid(t_ray *ray, t_map *map)
 {
-	int line_len;
+	int	line_len;
 
 	if (ray->dir.map_y < 0 || ray->dir.map_y >= map->max_y)
 		return (false);
