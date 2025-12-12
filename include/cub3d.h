@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 15:32:13 by jkorvenp         ###   ########.fr       */
+/*   Updated: 2025/12/12 10:06:57 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ typedef struct s_map
 	int				max_y;
 	int				start_line;
 	t_player		*player;
-	int				floor_color;
-	int				ceil_color;
+	uint32_t		floor_color;
+	uint32_t		ceil_color;
 	char			*north;
 	char			*south;
 	char			*west;

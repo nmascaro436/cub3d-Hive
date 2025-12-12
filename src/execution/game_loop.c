@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 14:40:16 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 16:28:08 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	setup_run_game(t_game *game, t_map *map)
 {
 	init_game_exec(game, map);
 	load_textures(game);
-	mlx_loop_hook(game->mlx, &game_loop, game);
+	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_key_hook(game->mlx, key_handler, game);
 	mlx_loop(game->mlx);
 }

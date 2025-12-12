@@ -65,7 +65,7 @@ void	print_textures(t_map *map)
 	printf("south = %s\n", map->south);
 	printf("west = %s\n", map->west);
 	printf("east = %s\n", map->east);
-	printf("floor color = %d\n", map->floor_color);
-	printf("ceil color = %d\n", map->ceil_color);
+	printf("floor color = %u\n", map->floor_color);
+	printf("ceil color = %u\n", map->ceil_color);
 	printf("\n");
 }

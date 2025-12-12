@@ -50,8 +50,8 @@ bool	valid_char(t_game *game, char c, int y, int x)
 		else
 		{
 			game->map->player = game->player; // added this
-			game->player->x = (double)x;
-			game->player->y = (double)y;
+			game->player->x = (double)x + 0.5; //need to move player from the exact line of the tile, was breaking the DDA loop
+			game->player->y = (double)y + 0.5;
 			game->player->view = c;
 			return (true);
 		}

@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 14:40:50 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/11 16:25:43 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static void	init_player_east_west(t_player *player)
 */
 void	init_game_exec(t_game *game, t_map *map)
 {
-	printf("Before mlx_init\n");
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
 	if (!game->mlx)
 		error_and_cleanup(game, "MLX initialization failed");
