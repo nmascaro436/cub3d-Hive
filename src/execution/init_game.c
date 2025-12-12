@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/11 16:25:43 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:56:12 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ static void	init_player_east_west(t_player *player)
 */
 void	init_game_exec(t_game *game, t_map *map)
 {
-	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
+	game->width = WIDTH;
+	game->height = HEIGHT;
+	game->mlx = mlx_init(game->width, game->height, "cub3D", true);
 	if (!game->mlx)
 		error_and_cleanup(game, "MLX initialization failed");
-	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
+	game->img = mlx_new_image(game->mlx, game->width, game->height);
 	if (!game->img)
 		error_and_cleanup(game, "Image creation failed");
 	if (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0)
