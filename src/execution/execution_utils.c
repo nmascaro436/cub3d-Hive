@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 09:28:48 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 09:46:17 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/12 10:55:25 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,19 @@ void	error_and_cleanup(t_game *game, char *str)
 			mlx_terminate(game->mlx);
 	}
 	exit (EXIT_FAILURE);
+}
+
+/*
+*
+*/
+bool	is_position_valid(t_ray *ray, t_map *map)
+{
+	int line_len;
+
+	if (ray->dir.map_y < 0 || ray->dir.map_y >= map->max_y)
+		return (false);
+	line_len = ft_strlen(map->chart[ray->dir.map_y]);
+	if (ray->dir.map_x < 0 || ray->dir.map_x >= line_len)
+		return (false);
+	return (true);
 }

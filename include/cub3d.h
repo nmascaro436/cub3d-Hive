@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 10:06:57 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/12 10:58:41 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	draw_ray(t_ray *ray, t_game *game, int x);
 void	move_player(t_game *game);
 void	draw_ceil_and_floor(t_game *game);
 void	init_ray_basic(t_ray *ray, t_game *game, int x);
+bool	is_position_valid(t_ray *ray, t_map *map);
 //parse.c
 t_game	*parse(char *argv);
 

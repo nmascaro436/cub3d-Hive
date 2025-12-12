@@ -30,8 +30,7 @@ uint32_t	get_color(char	*line)
 			return(-1);
 		
 	}
-	//int res = ((color[0] << 16) | (color[1] << 8) | color[2]);
-	uint32_t res = ((color[0] << 24) | (color[1] << 16) | (color[2] << 8) | 0xFF); // needed the alpha to see the colors (it mean everything was transparent) and we need the uint32_t because now we have 1 more byte, with int it was negative number
+	uint32_t res = ((color[0] << 24) | (color[1] << 16) | (color[2] << 8) | 0xFF);
 	return (res);
 }
 
