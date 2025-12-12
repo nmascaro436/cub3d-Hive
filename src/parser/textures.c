@@ -59,8 +59,8 @@ bool	store_textures(char **p, char *line)
 {
 	int len;
 
-	len = ft_strlen(line) - 5;
-	*p = ft_substr(line, 5 , len);
+	len = ft_strlen(line) - 3;
+	*p = ft_substr(line, 3 , len);
 	if (!*p)
 	{
 		return(false);

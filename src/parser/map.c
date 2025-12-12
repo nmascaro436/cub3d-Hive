@@ -24,6 +24,7 @@ C 225,30,0        # Ceiling
 
 validate closed walls, 1 player
 store player pos. 
+allow spaces
 -------------------------------------
 
 */
@@ -148,6 +149,21 @@ bool	parse_map(t_game *game, t_map *map, char *argv)
 	return (true);
 
 }
+bool	empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (!line)
+		return (true);
+	while (line[i])
+	{
+		if (line[i] != ' ' || line[i] != '\t')
+			return(false);
+		i++;
+	}
+	return (true);
+}
 int	check_state(t_map *map)
 {
 	if (map->floor_color && map->ceil_color && map->north && map->south && map->west && map->east)
@@ -182,8 +198,11 @@ bool	parse_textures(t_game *game, char *argv)
 		if (!map_state)
 		{
 			game->map->start_line++;
-			//if (empty_lines(line));
-				//continue;
+			if (empty_line(line))
+			{
+				free (line);
+				continue;
+			}
 			if(!check_textures(game->map, line))
 			{
 				free(line);
@@ -195,8 +214,24 @@ bool	parse_textures(t_game *game, char *argv)
 		}
 		else
 		{
-			//if (!empty_lines(line))
-		game->map->max_y++;
+			if (!game->map->max_y && empty_line(line))
+			{
+				game->map->start_line++;
+				free (line);
+				continue;
+			}
+			else
+			{
+				if (empty_line(line))
+				{
+					free(line);
+					free_all(game);
+					close(fd);
+					perror ("invalid  map");
+					return(false);
+				}
+				game->map->max_y++;
+			}
 		}
 		free(line);
 	}

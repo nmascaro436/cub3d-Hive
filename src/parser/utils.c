@@ -28,6 +28,8 @@ bool    valid_file(char *argv, char *file, int len)
 	
 	i = 0;
 	while (argv[i])
+		i++;
+	while (i > 0)
 	{
 		if (argv[i] == '.')
 		{
@@ -36,7 +38,7 @@ bool    valid_file(char *argv, char *file, int len)
 			else
 				return (false);
 		}
-		i++;
+		i--;
 	}
 	return (false);
 }

@@ -1,14 +1,18 @@
-NO ./north.png
-SO ./north.png
-WE ./north.png
-EA ./north.png
+NO ./textures/north.png
+SO ./textures/north.png
+
+WE ./textures/north.png
+EA ./textures/north.png
+
 F 220,100,0
 C 225,30,0
+
+
+
 
 1111111111
 1N000000001
 10000000001
 10000000001
 100000000001
-1111111111
-
+11111111111
