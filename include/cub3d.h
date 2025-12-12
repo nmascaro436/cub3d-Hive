@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 10:58:41 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:24:23 by jkorvenp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,14 @@ void	move_player(t_game *game);
 void	draw_ceil_and_floor(t_game *game);
 void	init_ray_basic(t_ray *ray, t_game *game, int x);
 bool	is_position_valid(t_ray *ray, t_map *map);
+
 //parse.c
 t_game	*parse(char *argv);
+bool	parse_map(t_game *game, t_map *map, char *argv);
+bool	parse_textures(t_game *game, t_map *map, char *argv);
 
 //map.c
-bool	parse_map(t_game *game, t_map *map, char *argv);
-bool	parse_textures(t_game *game, char *argv);
+bool	validate_map(t_game *game, t_map *map, char **chart);
 
 //textures.c
 bool	check_textures(t_map *map, char *line);
@@ -124,6 +126,8 @@ bool	check_textures(t_map *map, char *line);
 void    free_all(t_game *game);
 void	free_chart(t_map *map, int y);
 bool    valid_file(char *argv, char *file, int len);
+bool	empty_line(char *line);
+int		check_state(t_map *map);
 void	print_map(t_map *map);
 void	print_player(t_player *player);
 void	print_textures(t_map *map);

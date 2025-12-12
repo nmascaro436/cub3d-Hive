@@ -29,16 +29,61 @@ allow spaces
 
 */
 
-/*
-int	flood_fill(char **chart, int x, int y, int max_y)
-{
-	flood_fill(chart, x + 1, y, max_y);
-	flood_fill(chart, x - 1, y, max_y);
-	flood_fill(chart, x, y + 1, max_y);
-	flood_fill(chart, x, y - 1, max_y);
 
+int	flood_fill(char **copy, int x, int y, int max_y)
+{
+	int max_x;
+
+	if (y < 0 || y > max_y)
+		return (0);
+	max_x = ft_strlen(copy[y]);
+	if (x < 0 || x > max_x)
+		return (0);
+	if (copy[y][x] == ' ')
+		return (0);
+	if (copy[y][x] == 'T' || copy[y][x] == '1')
+		return (1);
+	else
+		copy[y][x] = 'T';
+	if (!flood_fill(copy, x + 1, y, max_y))
+		return (0);
+	if (!flood_fill(copy, x - 1, y, max_y))
+		return (0);
+	if (!flood_fill(copy, x, y + 1, max_y))
+		return (0);
+	if (!flood_fill(copy, x, y - 1, max_y))
+		return (0);
+	return (1);
 }
-*/
+
+bool	closed_map(t_map *map, char	**chart, t_player *player)
+{
+	char **copy;
+	int	i = 0;
+
+	copy = malloc(sizeof(char *)*(map->max_y + 1));
+	if (!copy)
+	{
+		//freeeeeeee
+		return(false);
+	}
+	while (i < map->max_y)
+	{
+		copy[i] = ft_strdup(chart[i]);
+		i++;
+	}
+	copy[i] = NULL;
+	if (flood_fill(copy, (int)player->x, (int)player->y, map->max_y))
+	{
+		//free copy??
+		return(true);
+	}
+	else
+	{
+		//free??
+		return(false);
+	}
+}
 
 bool	valid_char(t_game *game, char c, int y, int x)
 {
@@ -51,8 +96,8 @@ bool	valid_char(t_game *game, char c, int y, int x)
 		else
 		{
 			game->map->player = game->player; // added this
-			game->player->x = (double)x + 0.5;
-			game->player->y = (double)y + 0.5;
+			game->player->x = (double)x;
+			game->player->y = (double)y;
 			game->player->view = c;
 			return (true);
 		}
@@ -61,7 +106,6 @@ bool	valid_char(t_game *game, char c, int y, int x)
 		return (true);
 	return (false);
 }
-
 
 bool	validate_map(t_game *game, t_map *map, char **chart)
 {
@@ -75,9 +119,7 @@ bool	validate_map(t_game *game, t_map *map, char **chart)
 		while (chart[i][j])
 		{
 			if (!valid_char(game, chart[i][j], i, j))
-			{
 				return (false);
-			}
 			j++;
 		}
 		i++;
@@ -85,156 +127,11 @@ bool	validate_map(t_game *game, t_map *map, char **chart)
 	if (!game->player)
 		return (false);
 	else
-	{ //make a chart copy for flood_fill
-		//if(!flood_fill(chart, j, i, map->max_y))
-			//return (false);
+	{
+		if (!closed_map(map, chart, game->player))
+			return (false);
+		game->player->x += 0.5;
+		game->player->y += 0.5;
 		return (true);
 	}
-}
-
-bool	parse_map(t_game *game, t_map *map, char *argv)
-{
-	char	*line;
-	int 	len;
-	int 	fd;
-	int		i;
-	int j = 0;
-
-	i = 0;
-	len = 0;
-	map->chart = malloc(sizeof(char *)* (map->max_y + 1));
-	if (!map->chart)
-	{
-		//free things
-		return (false);
-	}
-	fd = open(argv, O_RDONLY);
-	if (fd < 0)
-	{
-		free_all(game);
-		perror(".cub open failed");
-		return (false);
-	}
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break;
-		if (i >= map->start_line)
-		{
-			if (j < map->max_y)
-			{
-			len = ft_strlen(line);
-			if (len > 0 && line[len - 1] == '\n')
-				line[len-1] = '\0';
-			len = ft_strlen(line);
-			if (len > map->max_x)
-				map->max_x = len;
-			map->chart[j] = ft_strdup(line);
-			if (!map->chart[j])
-			{
-				free_chart(map, j-1);
-				free_all(game);
-				return (false);
-			}
-			j++;
-			}
-		}
-		i++;
-		free(line);
-	}
-	map->chart[j] = NULL;
-	close (fd);
-	validate_map(game, map, map->chart);
-	return (true);
-
-}
-bool	empty_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (!line)
-		return (true);
-	while (line[i])
-	{
-		if (line[i] != ' ' || line[i] != '\t')
-			return(false);
-		i++;
-	}
-	return (true);
-}
-int	check_state(t_map *map)
-{
-	if (map->floor_color && map->ceil_color && map->north && map->south && map->west && map->east)
-		return (1);
-	else
-		return (0);
-}
-bool	parse_textures(t_game *game, char *argv)
-{
-	char	*line;
-	int 	len;
-	int		map_state = 0;
-	int 	fd;
-
-	
-	fd = open(argv, O_RDONLY);
-	if (fd < 0)
-	{
-		free_all(game);
-		perror(".cub open failed");
-		return (false);
-	}
-	map_state = 0;
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break;
-		len = ft_strlen(line);
-		if (len > 0 && line[len - 1] == '\n')
-			line[len-1] = '\0';
-		if (!map_state)
-		{
-			game->map->start_line++;
-			if (empty_line(line))
-			{
-				free (line);
-				continue;
-			}
-			if(!check_textures(game->map, line))
-			{
-				free(line);
-				free_all(game);
-				close(fd);
-				return(false);
-			}
-			map_state = check_state(game->map);
-		}
-		else
-		{
-			if (!game->map->max_y && empty_line(line))
-			{
-				game->map->start_line++;
-				free (line);
-				continue;
-			}
-			else
-			{
-				if (empty_line(line))
-				{
-					free(line);
-					free_all(game);
-					close(fd);
-					perror ("invalid  map");
-					return(false);
-				}
-				game->map->max_y++;
-			}
-		}
-		free(line);
-	}
-	close (fd);
-	return (true);
 }

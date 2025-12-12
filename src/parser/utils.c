@@ -42,6 +42,30 @@ bool    valid_file(char *argv, char *file, int len)
 	}
 	return (false);
 }
+
+bool	empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (!line)
+		return (true);
+	while (line[i])
+	{
+		if (line[i] != ' ' || line[i] != '\t')
+			return(false);
+		i++;
+	}
+	return (true);
+}
+int	check_state(t_map *map)
+{
+	if (map->floor_color && map->ceil_color && map->north && map->south && map->west && map->east)
+		return (1);
+	else
+		return (0);
+}
+
 void	print_map(t_map *map)
 {
 	int i = 0;

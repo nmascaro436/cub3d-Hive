@@ -1,58 +1,126 @@
-/*
-open, close, read, write,
-printf, malloc, free, perror,
-strerror, exit, gettimeofday
-*/ 
-
 #include "cub3d.h"
 
-
-t_game	*init_game()
+bool	parse_map(t_game *game, t_map *map, char *argv)
 {
-	t_game *game;
+	char	*line;
+	int 	len;
+	int 	fd;
+	int		i;
+	int j = 0;
 
-	game = malloc(sizeof(t_game));
-	if (!game)
-		return (NULL);
-	ft_memset(game, 0, sizeof(t_game));
-	game->map = malloc(sizeof(t_map));
-	if (!game->map)
+	i = 0;
+	len = 0;
+	map->chart = malloc(sizeof(char *)* (map->max_y + 1));
+	if (!map->chart)
 	{
-		free(game);
-		return (NULL);
+		//free things
+		return (false);
 	}
-	ft_memset(game->map, 0, sizeof(t_map));
-	game->player = malloc(sizeof(t_player));
-	if (!game->player)
+	fd = open(argv, O_RDONLY);
+	if (fd < 0)
 	{
-		free(game->map);
-		free(game);
-		return (NULL);
+		free_all(game);
+		perror(".cub open failed");
+		return (false);
 	}
-	ft_memset(game->player, 0, sizeof(t_player));
-	return (game);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break;
+		if (i >= map->start_line)
+		{
+			if (j < map->max_y)
+			{
+			len = ft_strlen(line);
+			if (len > 0 && line[len - 1] == '\n')
+				line[len-1] = '\0';
+			len = ft_strlen(line);
+			if (len > map->max_x)
+				map->max_x = len;
+			map->chart[j] = ft_strdup(line);
+			if (!map->chart[j])
+			{
+				free_chart(map, j-1);
+				free_all(game);
+				return (false);
+			}
+			j++;
+			}
+		}
+		i++;
+		free(line);
+	}
+	map->chart[j] = NULL;
+	close (fd);
+	return(true);
 }
 
-t_game	*parse(char *argv)
-{
-	t_game *game;
 
-	if (!valid_file(argv, ".cub", 5))
+bool	parse_textures(t_game *game, t_map *map, char *argv)
+{
+	char	*line;
+	int 	len;
+	int		map_state = 0;
+	int 	fd;
+
+	
+	fd = open(argv, O_RDONLY);
+	if (fd < 0)
 	{
-		perror("invalid filename");
-		return (NULL);
+		free_all(game);
+		perror(".cub open failed");
+		return (false);
 	}
-	game = init_game();
-	if (!game)
+	map_state = 0;
+	while (1)
 	{
-		perror("memory allocation failed");
-		return(NULL);
+		line = get_next_line(fd);
+		if (!line)
+			break;
+		len = ft_strlen(line);
+		if (len > 0 && line[len - 1] == '\n')
+			line[len-1] = '\0';
+		if (!map_state)
+		{
+			game->map->start_line++;
+			if (empty_line(line))
+			{
+				free (line);
+				continue;
+			}
+			if(!check_textures(map, line))
+			{
+				free(line);
+				free_all(game);
+				close(fd);
+				return(false);
+			}
+			map_state = check_state(map);
+		}
+		else
+		{
+			if (!map->max_y && empty_line(line))
+			{
+				map->start_line++;
+				free (line);
+				continue;
+			}
+			else
+			{
+				if (empty_line(line))
+				{
+					free(line);
+					free_all(game);
+					close(fd);
+					perror ("invalid map");
+					return(false);
+				}
+				map->max_y++;
+			}
+		}
+		free(line);
 	}
-	if (!parse_textures(game, argv))
-	{
-		return (NULL);
-	}
-	if (!parse_map(game, game->map, argv))
-		return (NULL);
-	return (game);
+	close (fd);
+	return (true);
 }

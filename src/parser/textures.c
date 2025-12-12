@@ -8,6 +8,8 @@ uint32_t	get_color(char	*line)
   
 	i = 2;
 	j = 0;
+	while (line[i] == ' ')
+		i++;
 	while(line[i] && j < 3)
 	{
 		while (ft_isdigit(line[i]))
@@ -19,7 +21,6 @@ uint32_t	get_color(char	*line)
 			return (-2);
 		i++;
 		j++;
-		
 	}
 	if (j != 3)
 		return(-1);
@@ -28,7 +29,6 @@ uint32_t	get_color(char	*line)
 		j--;
 		if (color[j] > 255 || color[j] < 0)
 			return(-1);
-		
 	}
 	uint32_t res = ((color[0] << 24) | (color[1] << 16) | (color[2] << 8) | 0xFF);
 	return (res);
@@ -58,9 +58,13 @@ bool	store_color(t_map *map, char *line)
 bool	store_textures(char **p, char *line)
 {
 	int len;
+	int i;
 
-	len = ft_strlen(line) - 3;
-	*p = ft_substr(line, 3 , len);
+	i = 3;
+	while (line[i] == ' ')
+		i++;
+	len = ft_strlen(line) - i;
+	*p = ft_substr(line, i , len);
 	if (!*p)
 	{
 		return(false);
