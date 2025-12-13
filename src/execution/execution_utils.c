@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 09:28:48 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 10:55:25 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:59:52 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ void	draw_ceil_and_floor(t_game *game)
 	int	y;
 
 	y = 0;
-	while (y < HEIGHT / 2)
+	while (y < game->height / 2)
 	{
 		x = 0;
-		while (x < WIDTH)
+		while (x < game->width)
 		{
 			mlx_put_pixel(game->img, x, y, game->map->ceil_color);
 			x++;
 		}
 		y++;
 	}
-	y = HEIGHT / 2;
-	while (y < HEIGHT)
+	y = game->height / 2;
+	while (y < game->height)
 	{
 		x = 0;
-		while (x < WIDTH)
+		while (x < game->width)
 		{
 			mlx_put_pixel(game->img, x, y, game->map->floor_color);
 			x++;
@@ -59,7 +59,7 @@ void	draw_ceil_and_floor(t_game *game)
 */
 void	init_ray_basic(t_ray *ray, t_game *game, int x)
 {
-	ray->dir.camera_x = 2.0 * x / (double)WIDTH - 1.0;
+	ray->dir.camera_x = 2.0 * x / (double)game->width - 1.0;
 	ray->dir.dir_x = game->player->dir_x + game->player->plane_x
 		* ray->dir.camera_x;
 	ray->dir.dir_y = game->player->dir_y + game->player->plane_y
@@ -101,11 +101,14 @@ void	error_and_cleanup(t_game *game, char *str)
 }
 
 /*
-*
+* Checks if the position is within the bounds of the map:
+* - map_y is within the maps's height.
+* - map_x is within the bounds of the current row's length.
+* Returns true if valid, false otherwise.
 */
 bool	is_position_valid(t_ray *ray, t_map *map)
 {
-	int line_len;
+	int	line_len;
 
 	if (ray->dir.map_y < 0 || ray->dir.map_y >= map->max_y)
 		return (false);
@@ -113,4 +116,45 @@ bool	is_position_valid(t_ray *ray, t_map *map)
 	if (ray->dir.map_x < 0 || ray->dir.map_x >= line_len)
 		return (false);
 	return (true);
+}
+
+/*
+* Checks if a map coordinate (x, y) is valid and within bounds
+* of the map array. Similar to the is_position_valid but used for the
+* movement of the player.
+*/
+bool    is_map_coord_safe(t_map *map, int x, int y)
+{
+   int line_len;
+
+
+   if (y < 0 || y >= map->max_y)
+       return (false);
+   line_len = ft_strlen(map->chart[y]);
+   if (x < 0 || x >= line_len)
+       return (false); 
+   return (true);
+}
+/*
+* Called by MLX when the window is resized. Updated
+* width and height, recreates the images and redraws the scene
+* to match the new size.
+*/
+void    resize_handler(int32_t w, int32_t h, void *param)
+{
+   t_game *game;
+  
+   game = (t_game *)param;
+
+
+   game->width = w;
+   game->height = h;
+
+
+   if (game->img)
+       mlx_delete_image(game->mlx, game->img);
+   game->img = mlx_new_image(game->mlx, w, h);
+   mlx_image_to_window(game->mlx, game->img, 0, 0);
+   draw_ceil_and_floor(game);
+   raycaster(game, game->map);
 }

@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 10:57:58 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:58:05 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,19 +123,19 @@ static void	dda_logic(t_ray *ray, t_map *map)
 * Prevents wall going off screen by putting the start/end to bounds 
 * of the screen.
 */
-static void	calculate_wall(t_ray *ray)
+static void	calculate_wall(t_ray *ray, t_game *game)
 {
 	if (ray->dir.side == 0)
 		ray->wall.perp_dist = ray->dir.side_dist_x - ray->dir.delta_dist_x;
 	else
 		ray->wall.perp_dist = ray->dir.side_dist_y - ray->dir.delta_dist_y;
-	ray->wall.line_height = HEIGHT / ray->wall.perp_dist;
-	ray->wall.start_draw = (HEIGHT / 2) - (ray->wall.line_height / 2);
+	ray->wall.line_height = game->height / ray->wall.perp_dist;
+	ray->wall.start_draw = (game->height / 2) - (ray->wall.line_height / 2);
 	if (ray->wall.start_draw < 0)
 		ray->wall.start_draw = 0;
-	ray->wall.end_draw = (HEIGHT / 2) + (ray->wall.line_height / 2);
-	if (ray->wall.end_draw >= HEIGHT)
-		ray->wall.end_draw = HEIGHT - 1;
+	ray->wall.end_draw = (game->height / 2) + (ray->wall.line_height / 2);
+	if (ray->wall.end_draw >= game->height)
+		ray->wall.end_draw = game->height - 1;
 }
 
 /*
@@ -150,12 +150,12 @@ void	raycaster(t_game *game, t_map *map)
 	t_ray	ray;
 
 	x = 0;
-	while (x < WIDTH)
+	while (x < game->width)
 	{
 		init_ray_basic(&ray, game, x);
 		init_ray_steps(&ray, game);
 		dda_logic(&ray, map);
-		calculate_wall(&ray);
+		calculate_wall(&ray, game);
 		draw_ray(&ray, game, x);
 		x++;
 	}
