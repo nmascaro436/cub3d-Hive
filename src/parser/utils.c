@@ -1,17 +1,19 @@
 #include "cub3d.h"
 
-void	free_chart(t_map *map, int y)
+void	free_chart(char **chart, int y)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < y)
 	{
-		free(map->chart[i]);
+		free(chart[i]);
 		i++;
 	}
-	free(map->chart);
+	free(chart);
 }
 
-void    free_all(t_game *game)
+void	free_all(t_game *game)
 {
 	free(game->map->north);
 	free(game->map->south);
@@ -22,10 +24,10 @@ void    free_all(t_game *game)
 	free (game);
 }
 
-bool    valid_file(char *argv, char *file, int len)
+bool	valid_file(char *argv, char *file, int len)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (argv[i])
 		i++;
@@ -53,12 +55,12 @@ bool	empty_line(char *line)
 	while (line[i])
 	{
 		if (line[i] != ' ' || line[i] != '\t')
-			return(false);
+			return (false);
 		i++;
 	}
 	return (true);
 }
-int	check_state(t_map *map)
+int	map_state(t_map *map)
 {
 	if (map->floor_color && map->ceil_color && map->north && map->south && map->west && map->east)
 		return (1);

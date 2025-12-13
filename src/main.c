@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 			//execution
 			setup_run_game(game, game->map);
 			// parsing free's:
-			free_chart(game->map, game->map->max_y);
+			free_chart(game->map->chart, game->map->max_y);
 			free_all(game);
 		}
 	}
