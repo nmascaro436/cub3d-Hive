@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 10:55:36 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 12:01:14 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	dda_check_hit(t_ray *ray, t_map *map)
 	if (!is_position_valid(ray, map))
 	{
 		ray->dir.hit_wall = 1;
+		ray->wall.texture = NORTH_TEXT;
 		return ;
 	}
 	if (map->chart[ray->dir.map_y][ray->dir.map_x] == '1')
