@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 15:09:40 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:44:15 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	init_ray_basic(t_ray *ray, t_game *game, int x);
 bool	is_position_valid(t_ray *ray, t_map *map);
 void	resize_handler(int32_t w, int32_t h, void *param);
 bool	is_map_coord_safe(t_map *map, int x, int y);
+void	close_window(void *param);
 //parse.c
 t_game	*parse(char *argv);
 bool	parse_map(t_game *game, t_map *map, char *argv);

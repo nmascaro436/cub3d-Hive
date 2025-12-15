@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 16:52:12 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:43:41 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@
 static void	key_press_handler(mlx_key_data_t keydata, t_game *game)
 {
 	if (keydata.key == MLX_KEY_ESCAPE)
+	{
 		error_and_cleanup(game, "Game closed");
+		free_chart(game->map->chart, game->map->max_y);
+		free_all(game);
+		exit (EXIT_SUCCESS);
+	}
 	else if (keydata.key == MLX_KEY_W)
 		game->forward = true;
 	else if (keydata.key == MLX_KEY_S)
@@ -111,5 +116,6 @@ void	setup_run_game(t_game *game, t_map *map)
 	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_key_hook(game->mlx, key_handler, game);
 	mlx_resize_hook(game->mlx, resize_handler, game);
+	mlx_close_hook(game->mlx, close_window, game);
 	mlx_loop(game->mlx);
 }

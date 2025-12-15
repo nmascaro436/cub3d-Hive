@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 11:05:17 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:46:28 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,15 @@ void	init_ray_basic(t_ray *ray, t_game *game, int x)
 	ray->dir.delta_dist_y = fabs(1 / ray->dir.dir_y);
 	ray->dir.hit_wall = 0;
 	ray->dir.side = 0;
+}
+
+void	close_window(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	error_and_cleanup(game, "Window closed");
+	free_chart(game->map->chart, game->map->max_y);
+	free_all(game);
+	exit (EXIT_SUCCESS);
 }
