@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 16:56:12 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 11:05:17 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,30 @@ void	init_game_exec(t_game *game, t_map *map)
 	game->right = false;
 	game->rotate_left = false;
 	game->rotate_right = false;
+}
+
+/*
+* Initializes basic ray properties for a given screen column::
+* - Calculates camera_x by converting the x position to a value between
+* -1 (left edge) and 1 (right edge), that represents how far the ray is from 
+* the center of view.
+* - Computes ray direction by combining the player's looking direction with the
+* camera plane scaled by camera_x, creating the FOV effect.
+* - Sets the initial map grid position of the ray to the player's current tile.
+* - Calculates delta distances (distance to cross one full grid square) using ray
+* direction.
+*/
+void	init_ray_basic(t_ray *ray, t_game *game, int x)
+{
+	ray->dir.camera_x = 2.0 * x / (double)game->width - 1.0;
+	ray->dir.dir_x = game->player->dir_x + game->player->plane_x
+		* ray->dir.camera_x;
+	ray->dir.dir_y = game->player->dir_y + game->player->plane_y
+		* ray->dir.camera_x;
+	ray->dir.map_x = (int)game->player->x;
+	ray->dir.map_y = (int)game->player->y;
+	ray->dir.delta_dist_x = fabs(1 / ray->dir.dir_x);
+	ray->dir.delta_dist_y = fabs(1 / ray->dir.dir_y);
+	ray->dir.hit_wall = 0;
+	ray->dir.side = 0;
 }
