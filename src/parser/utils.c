@@ -19,9 +19,9 @@ void	free_all(t_game *game)
 	free(game->map->south);
 	free(game->map->west);
 	free(game->map->east);
-	free (game->player);
-	free (game->map);
-	free (game);
+	free(game->player);
+	free(game->map);
+	free(game);
 }
 
 bool	valid_file(char *argv, char *file, int len)

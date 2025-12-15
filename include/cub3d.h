@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 16:44:15 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:36:35 by jkorvenp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	close_window(void *param);
 //parse.c
 t_game	*parse(char *argv);
 bool	parse_map(t_game *game, t_map *map, char *argv);
-bool	parse_textures(t_game *game, t_map *map, char *argv);
+bool	open_textures(t_game *game, t_map *map, char *argv);
 
 //map.c
 bool	validate_map(t_game *game, t_map *map, char **chart);

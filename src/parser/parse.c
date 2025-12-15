@@ -21,20 +21,41 @@ bool	fill_map(t_game *game, t_map *map, char *line, int j)
 			return (false);
 		}
 	}
-	else if (j == map->max_y)
-		map->chart[j] = NULL;
+	map->chart[j+1] = NULL;
 	return (true);
 }
-
-bool	parse_map(t_game *game, t_map *map, char *argv)
+bool	map_loop(t_game *game, t_map *map, int fd)
 {
 	char	*line;
-	int		fd;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (i >= map->start_line)
+		{
+			if (!fill_map(game, map, line, j))
+			{
+				free (line);
+				return (false);
+			}
+			j++;
+		}
+		i++;
+		free(line);
+	}
+	return (true);
+}
+
+bool	parse_map(t_game *game, t_map *map, char *argv)
+{
+	int		fd;
+
 	fd = open(argv, O_RDONLY);
 	if (fd < 0)
 	{
@@ -49,26 +70,13 @@ bool	parse_map(t_game *game, t_map *map, char *argv)
 		close(fd);
 		return (false);
 	}
-	while (1)
+	if (!map_loop(game, map, fd))
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (i >= map->start_line)
-		{
-			if (!fill_map(game, map, line, j))
-			{
-				free (line);
-				close (fd);
-				return (false);
-			}
-			j++;
-		}
-		i++;
-		free(line);
+		close(fd);
+		return (false);
 	}
-	close(fd);
-	return (true);
+	close (fd);
+	return (true); 
 }
 
 bool	texture_loop(t_game *game, t_map *map, char *line)
@@ -97,20 +105,11 @@ bool	texture_loop(t_game *game, t_map *map, char *line)
 		return(true);
 	}
 }
-
-bool	parse_textures(t_game *game, t_map *map, char *argv)
+bool	parse_textures(t_game *game, t_map *map, int fd)
 {
 	char	*line;
 	int		len;
-	int		fd;
 
-	fd = open(argv, O_RDONLY);
-	if (fd < 0)
-	{
-		free_all(game);
-		perror(".cub open failed");
-		return (false);
-	}
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -130,4 +129,18 @@ bool	parse_textures(t_game *game, t_map *map, char *argv)
 	}
 	close (fd);
 	return (true);
+}
+
+bool	open_textures(t_game *game, t_map *map, char *argv)
+{
+	int		fd;
+
+	fd = open(argv, O_RDONLY);
+	if (fd < 0)
+	{
+		free_all(game);
+		perror(".cub open failed");
+		return (false);
+	}
+	return (parse_textures(game, map, fd));
 }
