@@ -1,7 +1,7 @@
 EA ./textures/east.png
 NO ./textures/north.png
 SO ./textures/south.png
-WE    ./textures/north.png
+WE    ./textures/west.png
 
 F 13,27,42
 C 160,196,225
