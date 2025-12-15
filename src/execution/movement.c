@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 16:51:47 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:55:16 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,30 @@
 * Checks first horizontal movement (keeping y constant) and
 * then vertical movement (keeping x constant).
 */
-static void move_try(t_game *game, double dir_x, double dir_y, double speed)
+static void	move_try(t_game *game, double dir_x, double dir_y, double speed)
 {
-   double  new_x;
-   double  new_y;
-   int     check_x;
-   int     check_y;
+	double	new_x;
+	double	new_y;
+	int		check_x;
+	int		check_y;
 
-
-   new_x = game->player->x + dir_x * speed;
-   new_y = game->player->y + dir_y * speed;
-   check_x = (int)new_x;
-   check_y = (int)game->player->y;
-   if (is_map_coord_safe(game->map, check_x, check_y))
-   {
-       if (game->map->chart[check_y][check_x] != '1')
-           game->player->x = new_x;
-   }
-   check_x = (int)game->player->x;
-   check_y = (int)new_y;
-   if (is_map_coord_safe(game->map, check_x, check_y))
-   {
-       if (game->map->chart[check_y][check_x] != '1')
-           game->player->y = new_y;
-   }
+	new_x = game->player->x + dir_x * speed;
+	new_y = game->player->y + dir_y * speed;
+	check_x = (int)new_x;
+	check_y = (int)game->player->y;
+	if (is_map_coord_safe(game->map, check_x, check_y))
+	{
+		if (game->map->chart[check_y][check_x] != '1')
+			game->player->x = new_x;
+	}
+	check_x = (int)game->player->x;
+	check_y = (int)new_y;
+	if (is_map_coord_safe(game->map, check_x, check_y))
+	{
+		if (game->map->chart[check_y][check_x] != '1')
+			game->player->y = new_y;
+	}
 }
-
 
 /*
 * Handles player movement based on pressed movement keys:

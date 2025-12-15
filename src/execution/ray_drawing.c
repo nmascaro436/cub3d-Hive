@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 12:18:41 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 11:38:27 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 15:02:53 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	draw_ray(t_ray *ray, t_game *game, int x)
 	int				tex_x;
 	int				tex_y;
 	int				y;
-	int 			end;
+	int				end;
 
 	tex = texture_selection(ray, game->map);
 	tex_x = get_texture_column(ray, tex, game->player);
