@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 09:28:48 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 15:02:35 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:29:40 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	error_and_cleanup(t_game *game, char *str)
 		if (game->mlx)
 			mlx_terminate(game->mlx);
 	}
-	exit (EXIT_FAILURE);
 }
 
 /*
