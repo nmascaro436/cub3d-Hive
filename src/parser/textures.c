@@ -11,10 +11,10 @@ uint32_t	get_color(char	*line)
 	color[2] = 0;
 	i = 2;
 	j = 0;
-	while (line[i] == ' ')
-		i++;
 	while (line[i] && j < 3)
 	{
+		while (line[i] == ' ')
+			i++;
 		while (line[i] && ft_isdigit(line[i]))
 		{
 			color[j] = color[j] * 10 + line[i] - '0';

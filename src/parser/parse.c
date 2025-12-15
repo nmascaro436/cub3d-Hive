@@ -85,13 +85,12 @@ bool	texture_loop(t_game *game, t_map *map, char *line)
 	{
 		if (empty_line(line))
 		{
-			if (map->max_y == 0)
-				map->start_line++;
-			else
+			if (map->max_y > 0)
 			{
 				perror ("invalid map");
 				return (false);
 			}
+			map->start_line++;
 		}
 		else
 			map->max_y++;
