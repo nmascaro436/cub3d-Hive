@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:47:38 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 16:30:03 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:43:41 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ void	setup_run_game(t_game *game, t_map *map)
 	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_key_hook(game->mlx, key_handler, game);
 	mlx_resize_hook(game->mlx, resize_handler, game);
+	mlx_close_hook(game->mlx, close_window, game);
 	mlx_loop(game->mlx);
 }
