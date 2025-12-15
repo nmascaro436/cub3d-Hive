@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 09:28:48 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 11:05:29 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 15:02:35 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,16 @@ bool	is_position_valid(t_ray *ray, t_map *map)
 * of the map array. Similar to the is_position_valid but used for the
 * movement of the player.
 */
-bool    is_map_coord_safe(t_map *map, int x, int y)
+bool	is_map_coord_safe(t_map *map, int x, int y)
 {
-   int line_len;
+	int	line_len;
 
-
-   if (y < 0 || y >= map->max_y)
-       return (false);
-   line_len = ft_strlen(map->chart[y]);
-   if (x < 0 || x >= line_len)
-       return (false); 
-   return (true);
+	if (y < 0 || y >= map->max_y)
+		return (false);
+	line_len = ft_strlen(map->chart[y]);
+	if (x < 0 || x >= line_len)
+		return (false);
+	return (true);
 }
 
 /*
@@ -115,21 +114,17 @@ bool    is_map_coord_safe(t_map *map, int x, int y)
 * width and height, recreates the images and redraws the scene
 * to match the new size.
 */
-void    resize_handler(int32_t w, int32_t h, void *param)
+void	resize_handler(int32_t w, int32_t h, void *param)
 {
-   t_game *game;
-  
-   game = (t_game *)param;
+	t_game	*game;
 
-
-   game->width = w;
-   game->height = h;
-
-
-   if (game->img)
-       mlx_delete_image(game->mlx, game->img);
-   game->img = mlx_new_image(game->mlx, w, h);
-   mlx_image_to_window(game->mlx, game->img, 0, 0);
-   draw_ceil_and_floor(game);
-   raycaster(game, game->map);
+	game = (t_game *)param;
+	game->width = w;
+	game->height = h;
+	if (game->img)
+		mlx_delete_image(game->mlx, game->img);
+	game->img = mlx_new_image(game->mlx, w, h);
+	mlx_image_to_window(game->mlx, game->img, 0, 0);
+	draw_ceil_and_floor(game);
+	raycaster(game, game->map);
 }
