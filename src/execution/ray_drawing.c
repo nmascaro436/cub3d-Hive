@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 12:18:41 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 09:55:38 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 11:38:27 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ static int	get_texture_color(mlx_texture_t *tex, int tex_x, int tex_y)
 
 /*
 * Called once per screen column (x coordinate) during raycasting loop.
+* Clamps the drawing range to the visible screen to avoid out of bounds.
 * Draws one vertical column of pixels on the screen representing the wall seen 
 * by this ray:
 * - Selects texture.
@@ -123,16 +124,20 @@ void	draw_ray(t_ray *ray, t_game *game, int x)
 	int				tex_x;
 	int				tex_y;
 	int				y;
-	uint32_t		color;
+	int 			end;
 
 	tex = texture_selection(ray, game->map);
 	tex_x = get_texture_column(ray, tex, game->player);
 	y = ray->wall.start_draw;
-	while (y <= ray->wall.end_draw)
+	if (y < 0)
+		y = 0;
+	end = ray->wall.end_draw;
+	if (end >= game->height)
+		end = game->height - 1;
+	while (y <= end)
 	{
 		tex_y = get_texture_row(y, ray, tex);
-		color = get_texture_color(tex, tex_x, tex_y);
-		mlx_put_pixel(game->img, x, y, color);
+		mlx_put_pixel(game->img, x, y, get_texture_color(tex, tex_x, tex_y));
 		y++;
 	}
 }

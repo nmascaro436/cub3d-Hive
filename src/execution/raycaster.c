@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/12 16:58:05 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/15 12:01:14 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	dda_check_hit(t_ray *ray, t_map *map)
 	if (!is_position_valid(ray, map))
 	{
 		ray->dir.hit_wall = 1;
+		ray->wall.texture = NORTH_TEXT;
 		return ;
 	}
 	if (map->chart[ray->dir.map_y][ray->dir.map_x] == '1')
@@ -120,8 +121,6 @@ static void	dda_logic(t_ray *ray, t_map *map)
 * - Wall height is inversely proportional to distance
 * (small distance = bigger wall).
 * Centers the wall vertically on screen by calculating start/end draw positions.
-* Prevents wall going off screen by putting the start/end to bounds 
-* of the screen.
 */
 static void	calculate_wall(t_ray *ray, t_game *game)
 {
@@ -131,11 +130,7 @@ static void	calculate_wall(t_ray *ray, t_game *game)
 		ray->wall.perp_dist = ray->dir.side_dist_y - ray->dir.delta_dist_y;
 	ray->wall.line_height = game->height / ray->wall.perp_dist;
 	ray->wall.start_draw = (game->height / 2) - (ray->wall.line_height / 2);
-	if (ray->wall.start_draw < 0)
-		ray->wall.start_draw = 0;
 	ray->wall.end_draw = (game->height / 2) + (ray->wall.line_height / 2);
-	if (ray->wall.end_draw >= game->height)
-		ray->wall.end_draw = game->height - 1;
 }
 
 /*
