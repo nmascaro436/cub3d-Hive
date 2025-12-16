@@ -1,27 +1,15 @@
 #include "cub3d.h"
 
-void	free_chart(char **chart, int y)
+bool	access_texture(char	*p)
 {
-	int	i;
+	int fd;
 
-	i = 0;
-	while (i < y)
-	{
-		free(chart[i]);
-		i++;
-	}
-	free(chart);
-}
+	fd = open(p, O_RDONLY);
+	if (fd < 0)
+		return(false);
+	close (fd);
+	return (true);
 
-void	free_all(t_game *game)
-{
-	free(game->map->north);
-	free(game->map->south);
-	free(game->map->west);
-	free(game->map->east);
-	free(game->player);
-	free(game->map);
-	free(game);
 }
 
 bool	valid_file(char *argv, char *file, int len)
@@ -60,12 +48,39 @@ bool	empty_line(char *line)
 	}
 	return (true);
 }
+
 int	map_state(t_map *map)
 {
-	if (map->floor_color && map->ceil_color && map->north && map->south && map->west && map->east)
+	if (map->floor_color && map->ceil_color
+		&& map->north && map->south && map->west && map->east)
 		return (1);
 	else
 		return (0);
+}
+int	flood_fill(char **copy, int x, int y, int max_y)
+{
+	int	max_x;
+
+	if (y < 0 || y >= max_y)
+		return (0);
+	max_x = ft_strlen(copy[y]);
+	if (x < 0 || x >= max_x)
+		return (0);
+	if (copy[y][x] == ' ')
+		return (0);
+	if (copy[y][x] == 'T' || copy[y][x] == '1')
+		return (1);
+	else
+		copy[y][x] = 'T';
+	if (!flood_fill(copy, x + 1, y, max_y))
+		return (0);
+	if (!flood_fill(copy, x - 1, y, max_y))
+		return (0);
+	if (!flood_fill(copy, x, y + 1, max_y))
+		return (0);
+	if (!flood_fill(copy, x, y - 1, max_y))
+		return (0);
+	return (1);
 }
 
 void	print_map(t_map *map)

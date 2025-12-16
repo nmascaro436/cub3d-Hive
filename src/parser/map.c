@@ -1,125 +1,81 @@
 #include "cub3d.h"
 
-int	flood_fill(char **copy, int x, int y, int max_y)
+static bool	fill_map(t_game *game, t_map *map, char *line, int j)
 {
-	int	max_x;
+	int	len;
 
-	if (y < 0 || y >= max_y)
-		return (0);
-	max_x = ft_strlen(copy[y]);
-	if (x < 0 || x >= max_x)
-		return (0);
-	if (copy[y][x] == ' ')
-		return (0);
-	if (copy[y][x] == 'T' || copy[y][x] == '1')
-		return (1);
-	else
-		copy[y][x] = 'T';
-	if (!flood_fill(copy, x + 1, y, max_y))
-		return (0);
-	if (!flood_fill(copy, x - 1, y, max_y))
-		return (0);
-	if (!flood_fill(copy, x, y + 1, max_y))
-		return (0);
-	if (!flood_fill(copy, x, y - 1, max_y))
-		return (0);
-	return (1);
-}
-
-char	**copy_map(t_map *map, int *i)
-{
-	char	**copy;
-
-	copy = malloc(sizeof(char *)*(map->max_y + 1));
-	if (!copy)
-		return (NULL);
-	while (*i < map->max_y)
+	len = 0;
+	if (j < map->max_y)
 	{
-		copy[*i] = ft_strdup(map->chart[*i]);
-		if (!copy[*i])
+		len = ft_strlen(line);
+		if (len > 0 && line[len - 1] == '\n')
+			line[len - 1] = '\0';
+		len = ft_strlen(line);
+		if (len > map->max_x)
+			map->max_x = len;
+		map->chart[j] = ft_strdup(line);
+		if (!map->chart[j])
 		{
-			free_chart(copy, *i);
-			return (NULL);
-		}
-		(*i)++;
-	}
-	copy[*i] = NULL;
-	return (copy);
-}
-
-bool	closed_map(t_map *map, t_player *player)
-{
-	char	**copy;
-	int		i;
-
-	i = 0;
-	copy = copy_map(map, &i);
-	if (!copy)
-	{
-		perror ("map copy failed");
-		return (false);
-	}
-	if (flood_fill(copy, (int)player->x, (int)player->y, map->max_y))
-	{
-		player->x += 0.5;
-		player->y += 0.5;
-		free_chart(copy, i);
-		return (true);
-	}
-	else
-	{
-		perror("unclosed map");
-		free_chart(copy, i);
-		return (false);
-	}
-}
-
-bool	valid_char(t_game *game, char c, int y, int x)
-{
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-	{
-		if (game->player->view)
-		{
-			perror("too many players");
+			free_chart(map->chart, j - 1);
+			free_all(game);
 			return (false);
 		}
-		else
-		{
-			game->map->player = game->player;
-			game->player->x = (double)x;
-			game->player->y = (double)y;
-			game->player->view = c;
-			return (true);
-		}
 	}
-	else if (c == '0' || c == '1' || c == ' ')
-		return (true);
-	perror ("invalid map content");
-	return (false);
+	map->chart[j + 1] = NULL;
+	return (true);
 }
 
-bool	validate_map(t_game *game, t_map *map, char **chart)
+static bool	map_loop(t_game *game, t_map *map, int fd)
 {
-	int	i;
-	int	j;
+	char	*line;
+	int		i;
+	int		j;
 
 	i = 0;
-	while (i < map->max_y)
+	j = 0;
+	while (1)
 	{
-		j = 0;
-		while (chart[i][j])
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (i >= map->start_line)
 		{
-			if (!valid_char(game, chart[i][j], i, j))
+			if (!fill_map(game, map, line, j))
+			{
+				free (line);
 				return (false);
+			}
 			j++;
 		}
 		i++;
+		free(line);
 	}
-	if (!game->player->view)
+	return (true);
+}
+
+bool	parse_map(t_game *game, t_map *map, char *argv)
+{
+	int		fd;
+
+	fd = open(argv, O_RDONLY);
+	if (fd < 0)
 	{
-		perror("no player");
+		free_all(game);
+		perror(".cub open failed");
 		return (false);
 	}
-	else
-		return (closed_map(map, game->player));
+	map->chart = malloc(sizeof(char *) * (map->max_y + 1));
+	if (!map->chart)
+	{
+		free_all(game);
+		close(fd);
+		return (false);
+	}
+	if (!map_loop(game, map, fd))
+	{
+		close(fd);
+		return (false);
+	}
+	close(fd);
+	return (true);
 }

@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_game	*init_game(void)
+static t_game	*init_game(void)
 {
 	t_game	*game;
 
