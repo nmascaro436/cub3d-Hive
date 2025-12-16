@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 09:28:48 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 16:29:40 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:49:36 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	draw_ceil_and_floor(t_game *game)
 */
 void	error_and_cleanup(t_game *game, char *str)
 {
-	printf("Error: %s\n", str);
+	printf("%s\n", str);
 	if (game)
 	{
 		if (game->map)
@@ -113,7 +113,7 @@ bool	is_map_coord_safe(t_map *map, int x, int y)
 * width and height, recreates the images and redraws the scene
 * to match the new size.
 */
-void	resize_handler(int32_t w, int32_t h, void *param)
+void	resize_handler(int w, int h, void *param)
 {
 	t_game	*game;
 

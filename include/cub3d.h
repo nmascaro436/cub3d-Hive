@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 16:44:15 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:49:45 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_ray_wall
 	int		end_draw;
 	int		texture;
 }	t_ray_wall;
+
 typedef struct s_ray
 {
 	t_ray_dir	dir;
@@ -114,7 +115,7 @@ void	move_player(t_game *game);
 void	draw_ceil_and_floor(t_game *game);
 void	init_ray_basic(t_ray *ray, t_game *game, int x);
 bool	is_position_valid(t_ray *ray, t_map *map);
-void	resize_handler(int32_t w, int32_t h, void *param);
+void	resize_handler(int w, int h, void *param);
 bool	is_map_coord_safe(t_map *map, int x, int y);
 void	close_window(void *param);
 //parse.c

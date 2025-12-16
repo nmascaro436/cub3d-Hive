@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:58:24 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 16:46:28 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/16 15:41:46 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	init_game_exec(t_game *game, t_map *map)
 }
 
 /*
-* Initializes basic ray properties for a given screen column::
+* Initializes basic ray properties for a given screen column:
 * - Calculates camera_x by converting the x position to a value between
 * -1 (left edge) and 1 (right edge), that represents how far the ray is from 
 * the center of view.

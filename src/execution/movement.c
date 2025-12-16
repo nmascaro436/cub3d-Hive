@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 14:55:16 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/16 14:21:03 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ static void	handle_movement(t_game *game, double move_speed)
 /*
 * Performs the rotation on a vector by the specified angle using the matrix
 * rotation formula. Saves old x value before overwriting (new x and y depend 
-* on the original x). cos(angle) is how much of the rotation is horizontal 
-* and sin(angle) is the vertical component.
+* on the original x). cos(angle) is how much of the vector stays in its original
+* direction and sin(angle) is how much of it moves into the perpendicular
+* direction.
 */
 static void	rotate_calculation(double *x, double *y, double angle)
 {
@@ -118,7 +119,7 @@ static void	handle_rotation(t_game *game, double rotation_speed)
 * Main player movement update called every frame. Sets movement speed (based on
 * units per frame, 1 unit = 1 grid square) and rotation speed (based on radians
 * per frame, 1 radian ~= 57 degrees) to values that provide smooth
-* and natural feeling. 
+* and natural feeling.
 */
 void	move_player(t_game *game)
 {
