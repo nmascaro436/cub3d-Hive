@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/16 14:21:03 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:02:20 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ static void	handle_movement(t_game *game, double move_speed)
 * Performs the rotation on a vector by the specified angle using the matrix
 * rotation formula. Saves old x value before overwriting (new x and y depend 
 * on the original x). cos(angle) is how much of the vector stays in its original
-* direction and sin(angle) is how much of it moves into the perpendicular
-* direction.
+* direction (horizontal) and sin(angle) is how much of it moves into the
+* perpendicular direction (vertical).
 */
 static void	rotate_calculation(double *x, double *y, double angle)
 {
