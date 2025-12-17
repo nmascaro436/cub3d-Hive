@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:46:52 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 12:01:14 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/17 10:14:23 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	init_ray_steps(t_ray *ray, t_game *game)
 
 /*
 * Checks if the ray has hit a wall at the current grid position and
-* determines which texture to used based on the side of the wall hit.
+* determines which texture to use based on the side of the wall hit.
 * Before accessing the array, checks if the position is out of bounds,
 * if it is, marks it as hitting a wall and returns.
 * Sets the hit_wall flag to 1 when a wall is found in the map.

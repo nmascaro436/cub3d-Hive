@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 12:18:41 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/15 15:02:53 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/17 11:51:36 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	get_texture_column(t_ray *ray, mlx_texture_t *tex, t_player *p)
 * Calculates which row of the texture corresponds to the pixel being drawn:
 * - Determines position within the column, comparing current y with the 
 *	start position of the texture and the line height of the wall.
-* - Scales it to the texture height to get the row oof the texture.
+* - Scales it to the texture height to get the row of the texture.
 * - Performs safety checks to avoid going out of bounds.
 */
 static int	get_texture_row(int y, t_ray *ray, mlx_texture_t *tex)
