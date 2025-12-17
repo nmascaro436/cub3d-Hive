@@ -6,10 +6,9 @@ bool	access_texture(char	*p)
 
 	fd = open(p, O_RDONLY);
 	if (fd < 0)
-		return(false);
+		return (false);
 	close (fd);
 	return (true);
-
 }
 
 bool	valid_file(char *argv, char *file, int len)
@@ -57,31 +56,7 @@ int	map_state(t_map *map)
 	else
 		return (0);
 }
-int	flood_fill(char **copy, int x, int y, int max_y)
-{
-	int	max_x;
 
-	if (y < 0 || y >= max_y)
-		return (0);
-	max_x = ft_strlen(copy[y]);
-	if (x < 0 || x >= max_x)
-		return (0);
-	if (copy[y][x] == ' ')
-		return (0);
-	if (copy[y][x] == 'T' || copy[y][x] == '1')
-		return (1);
-	else
-		copy[y][x] = 'T';
-	if (!flood_fill(copy, x + 1, y, max_y))
-		return (0);
-	if (!flood_fill(copy, x - 1, y, max_y))
-		return (0);
-	if (!flood_fill(copy, x, y + 1, max_y))
-		return (0);
-	if (!flood_fill(copy, x, y - 1, max_y))
-		return (0);
-	return (1);
-}
 
 void	print_map(t_map *map)
 {

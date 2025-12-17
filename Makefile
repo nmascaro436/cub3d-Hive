@@ -6,7 +6,7 @@
 #    By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 11:12:56 by nmascaro          #+#    #+#              #
-#    Updated: 2025/12/16 14:39:02 by jkorvenp         ###   ########.fr        #
+#    Updated: 2025/12/17 15:57:19 by jkorvenp         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRCS = src/main.c src/parser/init.c src/parser/colors.c src/parser/map.c src/parser/free.c \
-		src/parser/utils.c src/parser/map_validation.c src/parser/textures.c \
+		src/parser/utils.c src/parser/map_validation.c src/parser/textures.c src/parser/map_utils.c \
  		src/execution/game_loop.c src/execution/init_game.c src/execution/movement.c \
 		src/execution/ray_drawing.c src/execution/raycaster.c src/execution/execution_utils.c
 .SECONDARY: $(OBJS)

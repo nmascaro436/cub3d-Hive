@@ -6,7 +6,7 @@
 /*   By: jkorvenp <jkorvenp@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/16 15:35:09 by jkorvenp         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:48:25 by jkorvenp         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ bool	parse_map(t_game *game, t_map *map, char *argv);
 bool	open_textures(t_game *game, t_map *map, char *argv);
 bool	validate_map(t_game *game, t_map *map, char **chart);
 bool	store_color(t_map *map, char *line);
+bool	valid_space(t_map *map, char **chart, int x, int y);
+bool	valid_player(t_game *game, int x, int y, char c);
 
 void	free_all(t_game *game);
 void	free_chart(char **chart, int y);

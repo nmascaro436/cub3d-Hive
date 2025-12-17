@@ -50,28 +50,21 @@ static bool	closed_map(t_map *map, t_player *player)
 
 static bool	valid_char(t_game *game, char c, int y, int x)
 {
-	if (y == 0 || y == game->map->max_y || x == 0)
+	int	len;
+
+	len = ft_strlen(game->map->chart[y]) - 1;
+	if (y == 0 || y == game->map->max_y || x == 0 || x == len)
 	{
-		if (c == '1' || c == ' ')
+		if (c == '1')
 			return (true);
+		else if (c == ' ')
+			return (valid_space(game->map, game->map->chart, y, x));
 	}
 	else if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-	{
-		if (game->player->view)
-		{
-			perror("too many players");
-			return (false);
-		}
-		else
-		{
-			game->map->player = game->player;
-			game->player->x = (double)x;
-			game->player->y = (double)y;
-			game->player->view = c;
-			return (true);
-		}
-	}
-	else if (c == '0' || c == '1' || c == ' ')
+		return (valid_player(game, x, y, c));
+	else if (c == ' ')
+		return (valid_space(game->map, game->map->chart, y, x));
+	else if (c == '0' || c == '1')
 		return (true);
 	perror ("invalid map content");
 	return (false);
@@ -90,14 +83,8 @@ bool	valid_content(t_game *game, t_map *map, char **chart)
 		len = ft_strlen(chart[i]);
 		while (chart[i][j])
 		{
-			if (j == len - 1 && (chart[i][j] != '1' && chart[i][j] != ' '))
-			{
-				perror ("invalid map content");
+			if (!valid_char(game, chart[i][j], i, j))
 				return (false);
-			}
-			else if (!valid_char(game, chart[i][j], i, j))
-				return (false);
-			//if (chart[i][j] == ' ')
 			j++;
 		}
 		i++;
@@ -107,6 +94,11 @@ bool	valid_content(t_game *game, t_map *map, char **chart)
 
 bool	validate_map(t_game *game, t_map *map, char **chart)
 {
+	if (map->max_y == 0)
+	{
+		perror ("no map");
+		return (false);
+	}
 	if (!valid_content(game, map, chart))
 		return (false);
 	if (!game->player->view)

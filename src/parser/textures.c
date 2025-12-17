@@ -12,7 +12,7 @@ static bool	store_textures(char **p, char *line, int i)
 	while (line[i] && line[i] == ' ')
 		i++;
 	len = ft_strlen(line) - 1;
-	while (len > i && line[len]== ' ')
+	while (len > i && line[len] == ' ')
 		len--;
 	*p = ft_substr(line, i, len - i + 1);
 	if (!*p)
@@ -30,7 +30,7 @@ static bool	store_textures(char **p, char *line, int i)
 
 static bool	check_textures(t_map *map, char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i] && line[i] == ' ')
