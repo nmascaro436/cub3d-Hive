@@ -20,5 +20,7 @@ int	main(int argc, char **argv)
 			free_all(game);
 		}
 	}
+	else
+		printf("Invalid number of arguments: needs map file\n");
 	return (0);
 }
