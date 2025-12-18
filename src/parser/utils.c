@@ -2,7 +2,7 @@
 
 bool	access_texture(char	*p)
 {
-	int fd;
+	int	fd;
 
 	fd = open(p, O_RDONLY);
 	if (fd < 0)
@@ -56,7 +56,6 @@ int	map_state(t_map *map)
 	else
 		return (0);
 }
-
 
 void	print_map(t_map *map)
 {
