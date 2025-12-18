@@ -1,91 +1,26 @@
 #include "cub3d.h"
 
-uint32_t	get_color(char	*line)
-{
-	int	color[3];
-	int	i;
-	int	j;
-
-	color[0] = 0;
-	color[1] = 0;
-	color[2] = 0;
-	i = 2;
-	j = 0;
-	while (line[i] == ' ')
-		i++;
-	while (line[i] && j < 3)
-	{
-		while (line[i] && ft_isdigit(line[i]))
-		{
-			color[j] = color[j] * 10 + line[i] - '0';
-			i++;
-		}
-		j++;
-		if (!line[i])
-			break ;
-		if (line[i] != ',')
-			return (-2);
-		i++;
-	}
-	if (j != 3)
-		return (-1);
-	while (j > 0)
-	{
-		j--;
-		if (color[j] > 255 || color[j] < 0)
-			return (-1);
-	}
-	return ((color[0] << 24) | (color[1] << 16) | (color[2] << 8) | 0xFF);
-}
-
-bool	store_color(t_map *map, char *line)
-{
-	if ((!map->floor_color && ft_strncmp(line, "F ", 2) == 0))
-	{
-		map->floor_color = get_color(line);
-		if (map->floor_color < 0)
-		{
-			perror("invalid floor color");
-			return (false);
-		}
-		else
-			return (true);
-	}
-	else if ((!map->ceil_color && ft_strncmp(line, "C ", 2) == 0))
-	{
-		map->ceil_color = get_color(line);
-		if (map->ceil_color < 0)
-		{
-			perror("invalid ceiling color");
-			return (false);
-		}
-		else
-			return (true);
-	}
-	return (false);
-}
-
-bool	store_textures(char **p, char *line)
+static bool	store_textures(char **p, char *line, int i)
 {
 	int	len;
-	int	i;
 
-	i = 3;
 	if (*p)
 	{
 		perror("redefinition of a texture");
 		return (false);
 	}
-	while (line[i] == ' ')
+	while (line[i] && line[i] == ' ')
 		i++;
-	len = ft_strlen(line) - i;
-	*p = ft_substr(line, i, len);
+	len = ft_strlen(line) - 1;
+	while (len > i && line[len] == ' ')
+		len--;
+	*p = ft_substr(line, i, len - i + 1);
 	if (!*p)
 	{
 		perror("texture allocation failed");
 		return (false);
 	}
-	if (!valid_file(*p, ".png", 5))
+	if (!valid_file(*p, ".png", 5) || !access_texture(*p))
 	{
 		perror("invalid texture file");
 		return (false);
@@ -93,16 +28,89 @@ bool	store_textures(char **p, char *line)
 	return (true);
 }
 
-bool	check_textures(t_map *map, char *line)
+static bool	check_textures(t_map *map, char *line)
 {
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	line += i;
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		return (store_textures(&map->north, line));
+		return (store_textures(&map->north, line, 3));
 	else if (ft_strncmp(line, "SO ", 3) == 0)
-		return (store_textures(&map->south, line));
+		return (store_textures(&map->south, line, 3));
 	else if (ft_strncmp(line, "WE ", 3) == 0)
-		return (store_textures(&map->west, line));
+		return (store_textures(&map->west, line, 3));
 	else if (ft_strncmp(line, "EA ", 3) == 0)
-		return (store_textures(&map->east, line));
+		return (store_textures(&map->east, line, 3));
 	else
 		return (store_color(map, line));
+}
+
+static bool	texture_loop(t_game *game, t_map *map, char *line)
+{
+	if (!map_state(map))
+	{
+		game->map->start_line++;
+		if (empty_line(line))
+			return (true);
+		else
+			return (check_textures(map, line));
+	}
+	else
+	{
+		if (empty_line(line))
+		{
+			if (map->max_y > 0)
+			{
+				perror ("invalid map");
+				return (false);
+			}
+			map->start_line++;
+		}
+		else
+			map->max_y++;
+		return (true);
+	}
+}
+
+static bool	parse_textures(t_game *game, t_map *map, int fd)
+{
+	char	*line;
+	int		len;
+
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		len = ft_strlen(line);
+		if (len > 0 && line[len - 1] == '\n')
+			line[len - 1] = '\0';
+		if (!texture_loop(game, map, line))
+		{
+			free(line);
+			free_all(game);
+			close(fd);
+			return (false);
+		}
+		free(line);
+	}
+	close (fd);
+	return (true);
+}
+
+bool	open_textures(t_game *game, t_map *map, char *argv)
+{
+	int		fd;
+
+	fd = open(argv, O_RDONLY);
+	if (fd < 0)
+	{
+		free_all(game);
+		perror(".cub open failed");
+		return (false);
+	}
+	return (parse_textures(game, map, fd));
 }

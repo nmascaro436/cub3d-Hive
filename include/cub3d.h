@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:39:19 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/16 10:49:45 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/18 09:55:28 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,23 +118,22 @@ bool	is_position_valid(t_ray *ray, t_map *map);
 void	resize_handler(int w, int h, void *param);
 bool	is_map_coord_safe(t_map *map, int x, int y);
 void	close_window(void *param);
-//parse.c
+//parser
 t_game	*parse(char *argv);
 bool	parse_map(t_game *game, t_map *map, char *argv);
-bool	parse_textures(t_game *game, t_map *map, char *argv);
-
-//map.c
+bool	open_textures(t_game *game, t_map *map, char *argv);
 bool	validate_map(t_game *game, t_map *map, char **chart);
+bool	store_color(t_map *map, char *line);
+bool	valid_space(t_map *map, char **chart, int x, int y);
+bool	valid_player(t_game *game, int x, int y, char c);
 
-//textures.c
-bool	check_textures(t_map *map, char *line);
-
-//utils.c
 void	free_all(t_game *game);
 void	free_chart(char **chart, int y);
 bool	valid_file(char *argv, char *file, int len);
 bool	empty_line(char *line);
 int		map_state(t_map *map);
+bool	access_texture(char	*p);
+int		flood_fill(char **copy, int x, int y, int max_y);
 void	print_map(t_map *map);
 void	print_player(t_player *player);
 void	print_textures(t_map *map);

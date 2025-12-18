@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_game	*init_game(void)
+static t_game	*init_game(void)
 {
 	t_game	*game;
 
@@ -41,7 +41,7 @@ t_game	*parse(char *argv)
 		perror("memory allocation failed");
 		return (NULL);
 	}
-	if (!parse_textures(game, game->map, argv))
+	if (!open_textures(game, game->map, argv))
 		return (NULL);
 	if (!parse_map(game, game->map, argv))
 		return (NULL);
