@@ -9,9 +9,6 @@ int	main(int argc, char **argv)
 		game = parse(argv[1]);
 		if (game)
 		{
-			print_map(game->map);
-			print_player(game->player);
-			print_textures(game->map);
 			setup_run_game(game, game->map);
 			free_chart(game->map->chart, game->map->max_y);
 			free_all(game);

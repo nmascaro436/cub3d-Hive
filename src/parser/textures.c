@@ -6,7 +6,7 @@ static bool	store_textures(char **p, char *line, int i)
 
 	if (*p)
 	{
-		perror("redefinition of a texture");
+		printf("redefinition of a texture\n");
 		return (false);
 	}
 	while (line[i] && line[i] == ' ')
@@ -17,12 +17,12 @@ static bool	store_textures(char **p, char *line, int i)
 	*p = ft_substr(line, i, len - i + 1);
 	if (!*p)
 	{
-		perror("texture allocation failed");
+		printf("texture allocation failed\n");
 		return (false);
 	}
 	if (!valid_file(*p, ".png", 5) || !access_texture(*p))
 	{
-		perror("invalid texture file");
+		printf("invalid texture file\n");
 		return (false);
 	}
 	return (true);
@@ -64,7 +64,7 @@ static bool	texture_loop(t_game *game, t_map *map, char *line)
 		{
 			if (map->max_y > 0)
 			{
-				perror ("invalid map");
+				printf("invalid map\n");
 				return (false);
 			}
 			map->start_line++;
@@ -109,7 +109,7 @@ bool	open_textures(t_game *game, t_map *map, char *argv)
 	if (fd < 0)
 	{
 		free_all(game);
-		perror(".cub open failed");
+		printf(".cub open failed\n");
 		return (false);
 	}
 	return (parse_textures(game, map, fd));

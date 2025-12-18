@@ -30,7 +30,7 @@ static bool	closed_map(t_map *map, t_player *player)
 	copy = copy_map(map, &i);
 	if (!copy)
 	{
-		perror ("map copy failed");
+		printf("map copy failed\n");
 		return (false);
 	}
 	if (flood_fill(copy, (int)player->x, (int)player->y, map->max_y))
@@ -42,7 +42,7 @@ static bool	closed_map(t_map *map, t_player *player)
 	}
 	else
 	{
-		perror("unclosed map");
+		printf("unclosed map\n");
 		free_chart(copy, i);
 		return (false);
 	}
@@ -66,7 +66,7 @@ static bool	valid_char(t_game *game, char c, int y, int x)
 		return (valid_space(game->map, game->map->chart, y, x));
 	else if (c == '0' || c == '1')
 		return (true);
-	perror ("invalid map content");
+	printf("invalid map content\n");
 	return (false);
 }
 
@@ -96,14 +96,14 @@ bool	validate_map(t_game *game, t_map *map, char **chart)
 {
 	if (map->max_y == 0)
 	{
-		perror ("no map");
+		printf("no map\n");
 		return (false);
 	}
 	if (!valid_content(game, map, chart))
 		return (false);
 	if (!game->player->view)
 	{
-		perror("no player");
+		printf("no player\n");
 		return (false);
 	}
 	else

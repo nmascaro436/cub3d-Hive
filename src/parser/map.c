@@ -61,7 +61,7 @@ bool	parse_map(t_game *game, t_map *map, char *argv)
 	if (fd < 0)
 	{
 		free_all(game);
-		perror(".cub open failed");
+		printf(".cub open failed\n");
 		return (false);
 	}
 	map->chart = malloc(sizeof(char *) * (map->max_y + 1));

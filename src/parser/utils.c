@@ -56,33 +56,3 @@ int	map_state(t_map *map)
 	else
 		return (0);
 }
-
-void	print_map(t_map *map)
-{
-	int i = 0;
-	while(map->chart[i])
-	{
-		printf("%s\n", map->chart[i]);
-		i++;
-	}
-	printf("mapX = %d\n", map->max_x);
-	printf("mapY = %d\n", map->max_y);
-	printf("\n");
-}
-void	print_player(t_player *player)
-{
-	printf("player_x = %f\n", player->x);
-	printf("player_y = %f\n", player->y);
-	printf("player_view = %c\n", player->view);
-	printf("\n");
-}
-void	print_textures(t_map *map)
-{
-	printf("north = %s\n", map->north);
-	printf("south = %s\n", map->south);
-	printf("west = %s\n", map->west);
-	printf("east = %s\n", map->east);
-	printf("floor color = %u\n", map->floor_color);
-	printf("ceil color = %u\n", map->ceil_color);
-	printf("\n");
-}

@@ -47,6 +47,8 @@ static bool	get_color(uint32_t *col, char *line, int i, int j)
 			return (false);
 		if (line[i] == ',' && j < 3)
 			i++;
+		else
+			return (false);
 	}
 	return (build_color(col, color, j));
 }
@@ -57,7 +59,7 @@ bool	store_color(t_map *map, char *line)
 	{
 		if (!get_color(&map->floor_color, line, 2, 0))
 		{
-			perror("invalid floor color");
+			printf("invalid floor color\n");
 			return (false);
 		}
 		else
@@ -67,13 +69,13 @@ bool	store_color(t_map *map, char *line)
 	{
 		if (!get_color(&map->ceil_color, line, 2, 0))
 		{
-			perror("invalid ceiling color");
+			printf("invalid ceiling color\n");
 			return (false);
 		}
 		else
 			return (true);
 	}
 	else
-		perror("invalid/missing textures");
+		printf("invalid/missing textures\n");
 	return (false);
 }

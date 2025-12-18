@@ -8,7 +8,7 @@ static bool	valid_space_y(t_map *map, char **chart, int y, int x)
 		{
 			if (chart[y + 1][x] != '1' && chart[y + 1][x] != ' ' )
 			{
-				perror ("unclosed space");
+				printf("unclosed space\n");
 				return (false);
 			}
 		}
@@ -19,7 +19,7 @@ static bool	valid_space_y(t_map *map, char **chart, int y, int x)
 		{
 			if (chart[y - 1][x] != '1' && chart[y - 1][x] != ' ' )
 			{
-				perror ("unclosed space");
+				printf("unclosed space\n");
 				return (false);
 			}
 		}
@@ -33,7 +33,7 @@ bool	valid_space(t_map *map, char **chart, int y, int x)
 	{
 		if (chart[y][x + 1] != '1' && chart[y][x + 1] != ' ' )
 		{
-			perror ("unclosed space");
+			printf("unclosed space\n");
 			return (false);
 		}
 	}
@@ -41,7 +41,7 @@ bool	valid_space(t_map *map, char **chart, int y, int x)
 	{
 		if (chart[y][x - 1] != '1' && chart[y][x - 1] != ' ' )
 		{
-			perror ("unclosed space");
+			printf("unclosed space\n");
 			return (false);
 		}
 	}
@@ -52,7 +52,7 @@ bool	valid_player(t_game *game, int x, int y, char c)
 {
 	if (game->player->view)
 	{
-		perror("too many players");
+		printf("too many players\n");
 		return (false);
 	}
 	else

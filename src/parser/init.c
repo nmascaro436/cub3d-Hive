@@ -32,13 +32,13 @@ t_game	*parse(char *argv)
 
 	if (!valid_file(argv, ".cub", 5))
 	{
-		perror("invalid filename");
+		printf("invalid filename\n");
 		return (NULL);
 	}
 	game = init_game();
 	if (!game)
 	{
-		perror("memory allocation failed");
+		printf("memory allocation failed\n");
 		return (NULL);
 	}
 	if (!open_textures(game, game->map, argv))
