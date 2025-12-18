@@ -6,7 +6,7 @@
 /*   By: nmascaro <nmascaro@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 14:55:45 by nmascaro          #+#    #+#             */
-/*   Updated: 2025/12/17 14:02:20 by nmascaro         ###   ########.fr       */
+/*   Updated: 2025/12/18 11:51:51 by nmascaro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,23 @@ static void	rotate_calculation(double *x, double *y, double angle)
 * the direction vector (where the player is looking) and the 
 * plane vector (field of view). Both need to rotate together to keep
 * the FOV perpendicular. Left arrow rotates counter-clockwise
-* (positive angle), right arrow rotates clockwise (negative angle).
+* (negative angle), right arrow rotates clockwise (positive angle).
 */
 static void	handle_rotation(t_game *game, double rotation_speed)
 {
 	if (game->rotate_left)
 	{
 		rotate_calculation(&game->player->dir_x,
-			&game->player->dir_y, rotation_speed);
+			&game->player->dir_y, -rotation_speed);
 		rotate_calculation(&game->player->plane_x,
-			&game->player->plane_y, rotation_speed);
+			&game->player->plane_y, -rotation_speed);
 	}
 	if (game->rotate_right)
 	{
 		rotate_calculation(&game->player->dir_x,
-			&game->player->dir_y, -rotation_speed);
+			&game->player->dir_y, rotation_speed);
 		rotate_calculation(&game->player->plane_x,
-			&game->player->plane_y, -rotation_speed);
+			&game->player->plane_y, rotation_speed);
 	}
 }
 
